@@ -32,8 +32,7 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String signup(@Valid @ModelAttribute("form") MemberSaveForm form,
-                         BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes) {
+                         BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult={}", bindingResult);
