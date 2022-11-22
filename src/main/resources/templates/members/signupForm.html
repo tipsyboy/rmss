@@ -1,42 +1,49 @@
 <html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
 <section class="container px-4 px-lg-5 mt-5 my-5">
-    <div class="py-5 text-center"><h2>회원 가입</h2></div>
+    <div class="py-5 text-center">
+        <h2>회원 가입</h2>
+    </div>
 
     <div class="row justify-content-center">
-        <form class="col-sm-6" th:action="@{/members/signup}" method="post">
+        <form class="col-sm-6" th:action="@{/members/signup}" th:object="${form}" method="post">
             <!-- ID -->
             <div class="form-group mb-2">
                 <label for="username" class="form-label">ID</label>
-                <input id="username" type="text" class="form-control" placeholder="아이디를 입력하세요."/>
+                <input id="username" type="text" class="form-control" placeholder="아이디를 입력하세요."
+                       th:errorclass="border-danger" th:field="*{username}"/>
                 <small id="nameHelp" class="form-text text-muted">
                     공백없이 영문 소문자와 숫자로만 3자 이상 15자 이내로 입력하세요.
                 </small>
+                <small class="text-danger" th:errors="*{username}">아이디 에러</small>
             </div>
 
             <!-- 패스워드 -->
             <div class="form-group mb-2">
                 <label for="password1" class="form-label">비밀번호</label>
                 <input id="password1" type="password" class="form-control"
-                       aria-describedby="passwordHelp1"/>
+                       th:errorclass="border-danger" th:field="*{password1}" aria-describedby="passwordHelp1"/>
                 <small id="passwordHelp1" class="form-text text-muted">
                     공백없이 영문자, 숫자, 특수기호로 8자 이상 25자 이내로 입력하세요.
                 </small>
+                <small class="text-danger" th:errors="*{password1}">비밀번호 에러</small>
             </div>
             <!-- 패스워드 확인 -->
             <div class="form-group mb-2">
                 <label for="password2" class="form-label">비밀번호</label>
-                <input id="password2" type="password" class="form-control"
-                       aria-describedby="passwordHelp2"/>
+                <input id="password2" type="password" class="form-control" aria-describedby="passwordHelp2"
+                       th:errorclass="border-danger" th:field="*{password2}"/>
                 <small id="passwordHelp2" class="form-text text-muted">
                     공백없이 영문자, 숫자, 특수기호로 8자 이상 25자 이내로 입력하세요.
                 </small>
+                <small class="text-danger" th:errors="*{password2}">비밀번호2 에러</small>
             </div>
             <!-- 이메일 -->
             <div class="form-group mb-2">
                 <label for="email" class="form-label">이메일</label>
-                <input id="email" type="email" class="form-control"
-                       placeholder="ex) abcdefu@gmail.com" aria-describedby="emailHelp">
+                <input id="email" type="email" class="form-control" placeholder="ex) abcdefu@gmail.com" aria-describedby="emailHelp"
+                       th:errorclass="border-danger" th:field="*{email}" />
                 <small id="emailHelp" class="form-text text-muted">이메일을 입력해주세요.</small>
+                <small class="text-danger" th:errors="*{email}">이메일 에러</small>
             </div>
 
             <div class="form-group mt-4">

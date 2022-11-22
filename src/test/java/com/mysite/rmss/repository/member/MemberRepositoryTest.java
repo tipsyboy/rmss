@@ -53,4 +53,22 @@ class MemberRepositoryTest {
         // then
         assertThat(findMember.getUsername()).isEqualTo(givenMemberName);
     }
+
+    @Test
+    void 회원_아이디가_존재하는가() {
+        // given
+        String givenMemberName = "memberA";
+        Member member = Member.builder()
+                .username(givenMemberName)
+                .email("123@gmail.com")
+                .password("1")
+                .build();
+        memberRepository.save(member);
+
+        // when
+        boolean isTrue = memberRepository.existsByName(givenMemberName);
+
+        // then
+        assertThat(isTrue).isTrue();
+    }
 }
