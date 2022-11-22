@@ -1,5 +1,50 @@
 <html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
-    <section class="container px-4 px-lg-5 mt-5 my-5">
-        메인 컨텐츠요
-    </section>
+<section class="container px-4 px-lg-5 mt-5 my-5">
+    <div class="py-5 text-center"><h2>회원 가입</h2></div>
+
+    <div class="row justify-content-center">
+        <form class="col-sm-6" th:action="@{/members/signup}" method="post">
+            <!-- ID -->
+            <div class="form-group mb-2">
+                <label for="username" class="form-label">ID</label>
+                <input id="username" type="text" class="form-control" placeholder="아이디를 입력하세요."/>
+                <small id="nameHelp" class="form-text text-muted">
+                    공백없이 영문 소문자와 숫자로만 3자 이상 15자 이내로 입력하세요.
+                </small>
+            </div>
+
+            <!-- 패스워드 -->
+            <div class="form-group mb-2">
+                <label for="password1" class="form-label">비밀번호</label>
+                <input id="password1" type="password" class="form-control"
+                       aria-describedby="passwordHelp1"/>
+                <small id="passwordHelp1" class="form-text text-muted">
+                    공백없이 영문자, 숫자, 특수기호로 8자 이상 25자 이내로 입력하세요.
+                </small>
+            </div>
+            <!-- 패스워드 확인 -->
+            <div class="form-group mb-2">
+                <label for="password2" class="form-label">비밀번호</label>
+                <input id="password2" type="password" class="form-control"
+                       aria-describedby="passwordHelp2"/>
+                <small id="passwordHelp2" class="form-text text-muted">
+                    공백없이 영문자, 숫자, 특수기호로 8자 이상 25자 이내로 입력하세요.
+                </small>
+            </div>
+            <!-- 이메일 -->
+            <div class="form-group mb-2">
+                <label for="email" class="form-label">이메일</label>
+                <input id="email" type="email" class="form-control"
+                       placeholder="ex) abcdefu@gmail.com" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">이메일을 입력해주세요.</small>
+            </div>
+
+            <div class="form-group mt-4">
+                <button class="btn btn-primary btn-block" type="submit"
+                        aria-describedby="submitHelp">가입하기
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
 </html>
