@@ -1,6 +1,6 @@
 package com.mysite.rmss.repository.member;
 
-import com.mysite.rmss.domain.Member;
+import com.mysite.rmss.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

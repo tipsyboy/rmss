@@ -1,4 +1,4 @@
-package com.mysite.rmss.domain;
+package com.mysite.rmss.domain.member;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,17 +1,14 @@
 package com.mysite.rmss.repository.member;
 
-import com.mysite.rmss.domain.Member;
-import org.assertj.core.api.Assertions;
+import com.mysite.rmss.domain.member.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
