@@ -33,9 +33,17 @@ public class MemberRepository {
                 .stream().findAny();
     }
 
-    public boolean existsByName(String username) {
+    public boolean existsByUsername(String username) {
         List<Long> result = em.createQuery("select m.id from Member m where m.username = :username", Long.class)
                 .setParameter("username", username)
+                .getResultList();
+
+        return result.size() > 0;
+    }
+
+    public boolean existsByEmail(String email) {
+        List<Long> result = em.createQuery("select m.id from Member m where m.email = :email", Long.class)
+                .setParameter("email", email)
                 .getResultList();
 
         return result.size() > 0;

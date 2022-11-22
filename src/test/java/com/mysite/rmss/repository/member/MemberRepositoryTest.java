@@ -58,17 +58,24 @@ class MemberRepositoryTest {
     void 회원_아이디가_존재하는가() {
         // given
         String givenMemberName = "memberA";
+        String givenEmail = "123@gmail.com";
         Member member = Member.builder()
                 .username(givenMemberName)
-                .email("123@gmail.com")
+                .email(givenEmail)
                 .password("1")
                 .build();
         memberRepository.save(member);
 
         // when
-        boolean isTrue = memberRepository.existsByName(givenMemberName);
+        boolean isExistUsername1 = memberRepository.existsByUsername(givenMemberName);
+        boolean isExistEmail1 = memberRepository.existsByEmail(givenEmail);
+        boolean isExistUsername2 = memberRepository.existsByEmail("NoName");
+        boolean isExistEmail2 = memberRepository.existsByEmail("no@email.com");
 
         // then
-        assertThat(isTrue).isTrue();
+        assertThat(isExistUsername1).isTrue();
+        assertThat(isExistEmail1).isTrue();
+        assertThat(isExistUsername2).isFalse();
+        assertThat(isExistEmail2).isFalse();
     }
 }
