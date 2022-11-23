@@ -4,6 +4,7 @@ import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.member.MemberSaveForm;
 import com.mysite.rmss.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService {
 
     public final MemberRepository memberRepository;
+    public final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void signup(MemberSaveForm form) {
@@ -23,7 +25,7 @@ public class MemberService {
     private Member saveNewMember(MemberSaveForm form) {
         return Member.builder()
                 .username(form.getUsername())
-                .password(form.getPassword1())
+                .password(passwordEncoder.encode(form.getPassword1()))
                 .email(form.getEmail())
                 .build();
     }
