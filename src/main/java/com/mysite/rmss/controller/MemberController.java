@@ -1,7 +1,9 @@
 package com.mysite.rmss.controller;
 
 import com.mysite.rmss.controller.validator.MemberSaveFormValidator;
+import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.member.MemberSaveForm;
+import com.mysite.rmss.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import javax.validation.Valid;
 @Controller
 public class MemberController {
 
+    private final MemberService memberService;
     private final MemberSaveFormValidator memberSaveFormValidator;
 
     @InitBinder
@@ -39,7 +42,10 @@ public class MemberController {
             return "members/signupForm";
         }
 
-        // TODO: 회원가입 성공 로직
+        // 회원가입 처리
+        memberService.signup(form);
+
         return "redirect:/";
     }
+
 }
