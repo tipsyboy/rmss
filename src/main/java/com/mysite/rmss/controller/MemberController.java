@@ -48,4 +48,8 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/login")
+    public String loginForm() {
+        return "members/loginForm";
+    }
 }
