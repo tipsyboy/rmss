@@ -12,7 +12,7 @@ public class MemberSaveForm {
 
     @NotBlank(message = "공백을 허용하지 않습니다.")
     @Length(min = 3, max = 15)
-    @Pattern(regexp = "^[ㄱ-ㅎ가-힣A-Za-z0-9_-]{3,15}$")
+    @Pattern(regexp = "^[ㄱ-ㅎ가-힣a-z0-9_-]{3,15}$")
     private String username;
 
     @NotBlank

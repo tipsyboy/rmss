@@ -45,7 +45,7 @@ public class MemberController {
         // 회원가입 처리
         memberService.signup(form);
 
-        return "redirect:/";
+        return "redirect:/members/login";
     }
 
     @GetMapping("/login")
