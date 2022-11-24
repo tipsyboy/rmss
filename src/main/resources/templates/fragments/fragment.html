@@ -22,8 +22,15 @@
 
         <div class="d-flex justify-content-end collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link text-light" href="#" aria-current="page">로그인</a></li>
-                <li class="nav-item"><a class="nav-link text-light" href="#" aria-current="page">회원 가입</a></li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" sec:authorize="isAnonymous()" th:href="@{/members/login}" aria-current="page">로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" sec:authorize="isAnonymous()" th:href="@{/members/signup}" aria-current="page">회원 가입</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" sec:authorize="isAuthenticated()" th:href="@{/members/logout}" aria-current="page">로그아웃</a>
+                </li>
             </ul>
         </div>
     </div>
