@@ -1,6 +1,7 @@
 package com.mysite.rmss.service.member;
 
 
+import com.mysite.rmss.config.auth.dto.CurrentMemberDto;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.member.MemberRole;
 import com.mysite.rmss.repository.member.MemberRepository;
@@ -36,8 +37,9 @@ public class MemberSecurityService implements UserDetailsService {
         } else {
             authorities.add(new SimpleGrantedAuthority(MemberRole.MEMBER.getValue()));
         }
+//        return new User(member.getUsername(), member.getPassword(), authorities);
 
-        return new User(member.getUsername(), member.getPassword(), authorities);
+        return new CurrentMemberDto(member, authorities);
     }
 
 }
