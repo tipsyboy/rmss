@@ -1,5 +1,7 @@
 package com.mysite.rmss.config;
 
+import com.mysite.rmss.service.member.MemberSecurityService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,21 +14,25 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@RequiredArgsConstructor
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
+    private final MemberSecurityService memberSecurityService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                    .authorizeRequests().antMatchers("/**").permitAll()
+        httpSecurity.authorizeRequests()
+                    .antMatchers("/**").permitAll()
                 .and()
                     .csrf().ignoringAntMatchers("/h2-console/**")
                 .and()
                     .headers()
                     .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                            XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
-                .and()
+                            XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
+
+        httpSecurity
                     .formLogin()
                     .loginPage("/members/login")
                     .defaultSuccessUrl("/")
@@ -35,6 +41,12 @@ public class SecurityConfig {
                     .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
                     .logoutSuccessUrl("/")
                     .invalidateHttpSession(true);
+
+        httpSecurity.rememberMe()
+                .rememberMeParameter("remember")
+                .tokenValiditySeconds(3600)
+                .alwaysRemember(false)
+                .userDetailsService(memberSecurityService);
 
         return httpSecurity.build();
     }
