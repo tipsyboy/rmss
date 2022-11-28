@@ -27,4 +27,10 @@ public class IndexController {
         model.addAttribute("welcome", welcome);
         return "home";
     }
+
+    // profile page
+    @GetMapping("/profile")
+    public String profile() {
+        return "members/profile";
+    }
 }
