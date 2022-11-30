@@ -1,6 +1,6 @@
 <html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
 <section class="container px-4 px-lg-5 mt-5 my-5">
-    <h4 class="border-bottom pb-2 mb-2">Member ID</h4>
+    <h1 class="border-bottom pb-2 mb-2" th:text="${member.username}">Member ID</h1>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
@@ -12,8 +12,21 @@
         </li>
     </ul>
     <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">profile</div>
-        <div class="tab-pane fade" id="pills-shop" role="tabpanel" aria-labelledby="pills-shop-tab">shop</div>
+        <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <div class="mb-4">TODO: 프로필 이미지 넣기</div>
+            <div>✏ 한줄소개</div>
+            <p class="lead mb-4" th:if="${!#strings.isEmpty(member.bio)}" th:text="${member.bio}">한줄소개</p>
+            <p class="lead mb-4" th:if="${#strings.isEmpty(member.bio)}">한줄소개를 추가해주세요.</p>
+            <div>✉ e-mail </div>
+            <p class="lead mb-4" th:text="${member.email}">email</p>
+
+            <div th:if="${isMyPage}">
+                <a class="btn btn-outline-primary" href="#" th:href="@{/profile/settings}">프로필 수정</a>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-shop" role="tabpanel" aria-labelledby="pills-shop-tab">
+            shop info
+        </div>
     </div>
 </section>
 </html>

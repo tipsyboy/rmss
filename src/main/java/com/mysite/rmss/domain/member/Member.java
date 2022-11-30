@@ -24,6 +24,8 @@ public class Member {
 
     private String password; // 비밀번호
 
+    private String bio; // 한 줄 소개
+
     // TODO: Embedded 타입으로 이후에 Address 를 추가할 것
 
 
