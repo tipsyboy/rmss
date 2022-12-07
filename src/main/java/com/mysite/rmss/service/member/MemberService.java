@@ -2,6 +2,7 @@ package com.mysite.rmss.service.member;
 
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.member.MemberInfoResponseDto;
+import com.mysite.rmss.dto.member.MemberProfileEditForm;
 import com.mysite.rmss.dto.member.MemberSaveForm;
 import com.mysite.rmss.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,22 @@ public class MemberService {
     public MemberInfoResponseDto memberInfoFindByUsername(String username) {
         Member findMember = memberRepository.findByName(username)
                 .orElseThrow(() -> new IllegalArgumentException(username + " 사용자를 찾을 수 없습니다."));
+
+        return new MemberInfoResponseDto(findMember);
+    }
+
+    // update profile
+    @Transactional
+    public void updateProfile(Long id, MemberProfileEditForm form) {
+        Member findMember = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. id=" + id));
+
+        findMember.updateProfile(form.getBio());
+    }
+
+    public MemberInfoResponseDto findById(Long id) {
+        Member findMember = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. id=" + id));
 
         return new MemberInfoResponseDto(findMember);
     }

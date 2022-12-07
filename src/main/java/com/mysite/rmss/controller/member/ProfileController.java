@@ -3,14 +3,16 @@ package com.mysite.rmss.controller.member;
 import com.mysite.rmss.config.auth.CurrentMember;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.member.MemberInfoResponseDto;
+import com.mysite.rmss.dto.member.MemberProfileEditForm;
 import com.mysite.rmss.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+@Slf4j
 @RequestMapping("/profile")
 @RequiredArgsConstructor
 @Controller
@@ -35,5 +37,33 @@ public class ProfileController {
         // TODO: Dto 변환 후 모델로 앞단에 전달한다
 
         return "members/profile";
+    }
+
+    @GetMapping("/settings")
+    public String editForm(@ModelAttribute("form") MemberProfileEditForm form,
+                           @CurrentMember Member member,
+                           Model model) {
+
+        if (member == null) {
+            // 로그인 멤버 없음
+            return "redirect:/";
+        }
+
+        MemberInfoResponseDto dto = memberService.findById(member.getId());
+        form.mappingProfileInfo(dto);
+        model.addAttribute("member", member);
+
+        return "members/profileEdit";
+    }
+
+    @PostMapping("/edit")
+    public String edit(@ModelAttribute("form") MemberProfileEditForm form,
+                       @CurrentMember Member member,
+                       RedirectAttributes redirectAttributes) {
+
+        memberService.updateProfile(member.getId(), form);
+
+        redirectAttributes.addAttribute("username", member.getUsername());
+        return "redirect:/profile/{username}";
     }
 }

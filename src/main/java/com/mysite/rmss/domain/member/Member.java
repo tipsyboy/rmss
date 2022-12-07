@@ -38,4 +38,10 @@ public class Member {
         this.email = email;
         this.password = password;
     }
+
+
+    // ===== update ===== //
+    public void updateProfile(String bio) {
+        this.bio = bio;
+    }
 }
