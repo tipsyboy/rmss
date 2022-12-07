@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RequestMapping("/profile")
 @RequiredArgsConstructor
@@ -63,7 +65,7 @@ public class ProfileController {
 
         memberService.updateProfile(member.getId(), form);
 
-        redirectAttributes.addAttribute("username", member.getUsername());
-        return "redirect:/profile/{username}";
+        redirectAttributes.addFlashAttribute("message", "프로필을 수정하였습니다.");
+        return "redirect:/profile/settings";
     }
 }

@@ -14,6 +14,17 @@
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-profileEdit" role="tabpanel" aria-labelledby="pills-profileEdit-tab">
             <form class="col-sm-6" th:action="@{/profile/edit}" th:object="${form}" method="post">
+
+                <div th:if="${message}" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    <strong th:text="${message}">수정 완료</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+
+                <!-- ID -->
+                <div class="form-group mb-2">
+                    <label for="username" class="form-label">ID</label>
+                    <input id="username" type="text" class="form-control" th:field="*{username}" disabled/>
+                </div>
                 <!-- bio tab -->
                 <div class="form-group mb-2">
                     <label for="bio" class="form-label">한 줄 소개</label>
@@ -22,6 +33,8 @@
                         40자 이내 한줄로 자신을 소개해보세요!
                     </small>
                 </div>
+
+                <!-- submit button -->
                 <div class="form-group mt-4">
                     <button class="btn btn-primary btn-block" type="submit" aria-describedby="submitHelp">수정</button>
                 </div>
