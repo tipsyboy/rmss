@@ -1,6 +1,6 @@
 <html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
 <section class="container px-4 px-lg-5 mt-5 my-5">
-    <h1 class="border-bottom pb-2 mb-2" th:text="${member.username}">Member ID</h1>
+    <h1 class="border-bottom pb-2 mb-2">프로필 수정</h1>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profileEdit"
@@ -13,9 +13,9 @@
     </ul>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-profileEdit" role="tabpanel" aria-labelledby="pills-profileEdit-tab">
-            <form class="col-sm-6" th:action="@{/profile/edit}" th:object="${form}" method="post">
+            <form class="col-sm-6" th:action="@{/profile/settings}" th:object="${form}" method="post">
 
-                <div th:if="${message}" class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong th:text="${message}">수정 완료</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
@@ -23,15 +23,16 @@
                 <!-- ID -->
                 <div class="form-group mb-2">
                     <label for="username" class="form-label">ID</label>
-                    <input id="username" type="text" class="form-control" th:field="*{username}" disabled/>
+                    <input id="username" type="text" class="form-control" th:field="*{username}" readonly onfocus="this.blur();"/>
                 </div>
                 <!-- bio tab -->
                 <div class="form-group mb-2">
                     <label for="bio" class="form-label">한 줄 소개</label>
-                    <input id="bio" type="text" class="form-control" placeholder="40자 이내 한줄로 자신을 소개해보세요!" th:field="*{bio}"/>
+                    <input id="bio" type="text" class="form-control" placeholder="30자 이내 한줄로 자신을 소개해보세요!" th:field="*{bio}"/>
                     <small id="bioHelp" class="form-text text-muted">
-                        40자 이내 한줄로 자신을 소개해보세요!
+                        30자 이내 한줄로 자신을 소개해보세요!
                     </small>
+                    <small class="text-danger" th:errors="*{bio}">한줄 소개 에러</small>
                 </div>
 
                 <!-- submit button -->
