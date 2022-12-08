@@ -74,4 +74,9 @@ public class ProfileController {
         redirectAttributes.addFlashAttribute("message", "프로필을 수정하였습니다.");
         return "redirect:/profile/settings";
     }
+
+    @GetMapping("/password/edit")
+    public String passwordEditForm(@ModelAttribute("form") MemberProfileEditForm form) {
+        return "members/passwordEdit";
+    }
 }
