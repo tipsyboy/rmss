@@ -100,13 +100,18 @@ public class ProfileController {
                                @CurrentMember Member member) {
 
         if (!passwordEncoder.matches(passwordEditForm.getPassword(), member.getPassword())) {
-            log.info("bindingResult={}", bindingResult);
             bindingResult.rejectValue("password", "passwordIncorrect",
                     "기존 비밀번호를 잘못 입력하셨습니다. 다시 입력해 주세요.");
+        }
+
+        if (bindingResult.hasErrors()) {
+            log.info("bindingResult={}", bindingResult);
             return "members/passwordEdit";
         }
+
         // TODO: 실제 패스워드 변경 로직
-        log.info(" === 실제 패스워드 변경 로직 실행 === ");
+        memberService.passwordEdit(member.getId(), passwordEditForm.getNewPassword1());
+
 
         return "redirect:/";
     }

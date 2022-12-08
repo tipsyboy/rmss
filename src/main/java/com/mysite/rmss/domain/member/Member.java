@@ -44,4 +44,8 @@ public class Member {
     public void updateProfile(String bio) {
         this.bio = bio;
     }
+
+    public void editPassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

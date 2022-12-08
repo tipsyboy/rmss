@@ -47,9 +47,17 @@ public class MemberService {
 
     public MemberInfoResponseDto findById(Long id) {
         Member findMember = memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. id=" + id));
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. id= " + id));
 
         return new MemberInfoResponseDto(findMember);
+    }
+
+    @Transactional
+    public void passwordEdit(Long id, String newPassword) {
+        Member findMember = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. id= " + id));
+
+        findMember.editPassword(passwordEncoder.encode(newPassword));
     }
 
     private Member saveNewMember(MemberSaveForm form) {

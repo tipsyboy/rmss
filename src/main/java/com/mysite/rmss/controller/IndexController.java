@@ -24,8 +24,10 @@ public class IndexController {
     public String home(@CurrentMember Member member, Model model) {
         String welcome = "손";
         if (member != null) {
+            log.info("CurrentMemberPassword={}", member.getPassword());
             welcome = member.getUsername();
         }
+
 
         model.addAttribute("welcome", welcome);
         return "home";
