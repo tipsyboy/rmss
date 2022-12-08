@@ -6,9 +6,16 @@ import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.member.MemberInfoResponseDto;
 import com.mysite.rmss.dto.member.MemberPasswordEditForm;
 import com.mysite.rmss.dto.member.MemberProfileEditForm;
+import com.mysite.rmss.service.member.MemberSecurityService;
 import com.mysite.rmss.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +24,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Slf4j
@@ -28,6 +36,8 @@ public class ProfileController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final PasswordEditFormValidator passwordEditFormValidator;
+    private final MemberSecurityService memberSecurityService;
+    private final AuthenticationManager authenticationManager;
 
     @InitBinder("passwordEditForm")
     public void init(WebDataBinder dataBinder) {
@@ -55,17 +65,17 @@ public class ProfileController {
 
     @GetMapping("/settings")
     public String editForm(@ModelAttribute("profileEditForm") MemberProfileEditForm form,
-                           @CurrentMember Member member,
+                           @CurrentMember Member currentMember,
                            Model model) {
 
-        if (member == null) {
+        if (currentMember == null) {
             // 로그인 멤버 없음
             return "redirect:/";
         }
 
-        MemberInfoResponseDto dto = memberService.findById(member.getId());
+        MemberInfoResponseDto dto = memberService.findById(currentMember.getId());
         form.mappingProfileInfo(dto);
-        model.addAttribute("member", member);
+        model.addAttribute("member", currentMember);
 
         return "members/profileEdit";
     }
@@ -73,14 +83,14 @@ public class ProfileController {
     @PostMapping("/settings")
     public String edit(@Valid @ModelAttribute("profileEditForm") MemberProfileEditForm form,
                        BindingResult bindingResult,
-                       @CurrentMember Member member,
+                       @CurrentMember Member currentMember,
                        RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "members/profileEdit";
         }
 
-        memberService.updateProfile(member.getId(), form);
+        memberService.updateProfile(currentMember.getId(), form);
 
         redirectAttributes.addFlashAttribute("message", "프로필을 수정하였습니다.");
         return "redirect:/profile/settings";
@@ -97,9 +107,10 @@ public class ProfileController {
     @PostMapping("/password/edit")
     public String passwordEdit(@Valid @ModelAttribute("passwordEditForm") MemberPasswordEditForm passwordEditForm,
                                BindingResult bindingResult,
-                               @CurrentMember Member member) {
+                               @CurrentMember Member currentMember,
+                               HttpSession httpSession) {
 
-        if (!passwordEncoder.matches(passwordEditForm.getPassword(), member.getPassword())) {
+        if (!passwordEncoder.matches(passwordEditForm.getPassword(), currentMember.getPassword())) {
             bindingResult.rejectValue("password", "passwordIncorrect",
                     "기존 비밀번호를 잘못 입력하셨습니다. 다시 입력해 주세요.");
         }
@@ -109,10 +120,20 @@ public class ProfileController {
             return "members/passwordEdit";
         }
 
-        // TODO: 실제 패스워드 변경 로직
-        memberService.passwordEdit(member.getId(), passwordEditForm.getNewPassword1());
+        memberService.passwordEdit(currentMember.getId(), passwordEditForm.getNewPassword1());
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        Member member = (Member) authentication.getPrincipal();
+        SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication, currentMember.getUsername()));
 
         return "redirect:/";
     }
+
+    private Authentication createNewAuthentication(Authentication currentAuth, String username) {
+        UserDetails newPrincipal = memberSecurityService.loadUserByUsername(username);
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
+        newAuth.setDetails(currentAuth.getDetails());
+        return newAuth;
+    }
+
 }
