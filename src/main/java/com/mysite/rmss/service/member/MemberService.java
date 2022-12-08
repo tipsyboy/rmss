@@ -6,6 +6,10 @@ import com.mysite.rmss.dto.member.MemberProfileEditForm;
 import com.mysite.rmss.dto.member.MemberSaveForm;
 import com.mysite.rmss.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +21,13 @@ public class MemberService {
 
     public final MemberRepository memberRepository;
     public final PasswordEncoder passwordEncoder;
+    public final MemberSecurityService memberSecurityService;
 
     @Transactional
     public void signup(MemberSaveForm form) {
         Member newMember = saveNewMember(form);
         memberRepository.save(newMember);
+        loginAfterSignup(form);
     }
 
     /**
@@ -66,5 +72,14 @@ public class MemberService {
                 .password(passwordEncoder.encode(form.getPassword1()))
                 .email(form.getEmail())
                 .build();
+    }
+
+    /**
+     * 회원가입 이후 자동 로그인
+     */
+    private void loginAfterSignup(MemberSaveForm form) {
+        UserDetails principal = memberSecurityService.loadUserByUsername(form.getUsername());
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(principal, form.getPassword1());
+        SecurityContextHolder.getContext().setAuthentication(auth);
     }
 }

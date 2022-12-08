@@ -41,11 +41,10 @@ public class MemberController {
             return "members/signupForm";
         }
 
-        // TODO: 회원가입 후 자동로그인은 도대체 어떻게 구현할 수 있을까..?
         // 회원가입 처리
         memberService.signup(saveForm);
 
-        return "redirect:/members/login";
+        return "redirect:/";
     }
 
     @GetMapping("/login")
