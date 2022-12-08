@@ -107,8 +107,7 @@ public class ProfileController {
     @PostMapping("/password/edit")
     public String passwordEdit(@Valid @ModelAttribute("passwordEditForm") MemberPasswordEditForm passwordEditForm,
                                BindingResult bindingResult,
-                               @CurrentMember Member currentMember,
-                               HttpSession httpSession) {
+                               @CurrentMember Member currentMember) {
 
         if (!passwordEncoder.matches(passwordEditForm.getPassword(), currentMember.getPassword())) {
             bindingResult.rejectValue("password", "passwordIncorrect",
@@ -122,18 +121,17 @@ public class ProfileController {
 
         memberService.passwordEdit(currentMember.getId(), passwordEditForm.getNewPassword1());
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Member member = (Member) authentication.getPrincipal();
-        SecurityContextHolder.getContext().setAuthentication(createNewAuthentication(authentication, currentMember.getUsername()));
+        renewAuthenticationAfterPasswordEdit(currentMember, passwordEditForm);
 
         return "redirect:/";
     }
 
-    private Authentication createNewAuthentication(Authentication currentAuth, String username) {
-        UserDetails newPrincipal = memberSecurityService.loadUserByUsername(username);
-        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, currentAuth.getCredentials(), newPrincipal.getAuthorities());
-        newAuth.setDetails(currentAuth.getDetails());
-        return newAuth;
+    private void renewAuthenticationAfterPasswordEdit(Member currentMember,
+                                     MemberPasswordEditForm passwordEditForm) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails newPrincipal = memberSecurityService.loadUserByUsername(currentMember.getUsername());
+        UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, passwordEditForm.getNewPassword1(), newPrincipal.getAuthorities());
+        newAuth.setDetails(authentication.getDetails());
+        SecurityContextHolder.getContext().setAuthentication(newAuth);
     }
-
 }
