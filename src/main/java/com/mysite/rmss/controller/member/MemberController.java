@@ -21,18 +21,19 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberSaveFormValidator memberSaveFormValidator;
 
-    @InitBinder("MemberSaveForm") // Think: 이렇게 target 을 설정해서 하는거면.. initBinder 를 사용할 이유가 없지않나?
+    @InitBinder("saveForm") // Think: 이렇게 target 을 설정해서 하는거면.. initBinder 를 사용할 이유가 없지않나?
     public void init(WebDataBinder dataBinder) {
+        log.info("webDataBinder={}, target={}", dataBinder, dataBinder.getTarget());
         dataBinder.addValidators(memberSaveFormValidator);
     }
 
     @GetMapping("/signup")
-    public String signupForm(@ModelAttribute("form") MemberSaveForm form) {
+    public String signupForm(@ModelAttribute("saveForm") MemberSaveForm saveForm) {
         return "members/signupForm";
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid @ModelAttribute("form") MemberSaveForm form,
+    public String signup(@Valid @ModelAttribute("saveForm") MemberSaveForm saveForm,
                          BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -42,7 +43,7 @@ public class MemberController {
 
         // TODO: 회원가입 후 자동로그인은 도대체 어떻게 구현할 수 있을까..?
         // 회원가입 처리
-        memberService.signup(form);
+        memberService.signup(saveForm);
 
         return "redirect:/members/login";
     }

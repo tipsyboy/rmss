@@ -1,15 +1,19 @@
 package com.mysite.rmss.controller.member;
 
 import com.mysite.rmss.config.auth.CurrentMember;
+import com.mysite.rmss.controller.validator.PasswordEditFormValidator;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.member.MemberInfoResponseDto;
+import com.mysite.rmss.dto.member.MemberPasswordEditForm;
 import com.mysite.rmss.dto.member.MemberProfileEditForm;
 import com.mysite.rmss.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,6 +26,13 @@ import javax.validation.Valid;
 public class ProfileController {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
+    private final PasswordEditFormValidator passwordEditFormValidator;
+
+    @InitBinder("passwordEditForm")
+    public void init(WebDataBinder dataBinder) {
+        dataBinder.addValidators(passwordEditFormValidator);
+    }
 
     // profile page
     @GetMapping("/{username}")
@@ -43,7 +54,7 @@ public class ProfileController {
     }
 
     @GetMapping("/settings")
-    public String editForm(@ModelAttribute("form") MemberProfileEditForm form,
+    public String editForm(@ModelAttribute("profileEditForm") MemberProfileEditForm form,
                            @CurrentMember Member member,
                            Model model) {
 
@@ -60,7 +71,7 @@ public class ProfileController {
     }
 
     @PostMapping("/settings")
-    public String edit(@Valid @ModelAttribute("form") MemberProfileEditForm form,
+    public String edit(@Valid @ModelAttribute("profileEditForm") MemberProfileEditForm form,
                        BindingResult bindingResult,
                        @CurrentMember Member member,
                        RedirectAttributes redirectAttributes) {
@@ -75,8 +86,28 @@ public class ProfileController {
         return "redirect:/profile/settings";
     }
 
+
+    // ===== password edit ===== //
+
     @GetMapping("/password/edit")
-    public String passwordEditForm(@ModelAttribute("form") MemberProfileEditForm form) {
+    public String passwordEditForm(@ModelAttribute("passwordEditForm") MemberPasswordEditForm passwordEditForm) {
         return "members/passwordEdit";
+    }
+
+    @PostMapping("/password/edit")
+    public String passwordEdit(@Valid @ModelAttribute("passwordEditForm") MemberPasswordEditForm passwordEditForm,
+                               BindingResult bindingResult,
+                               @CurrentMember Member member) {
+
+        if (!passwordEncoder.matches(passwordEditForm.getPassword(), member.getPassword())) {
+            log.info("bindingResult={}", bindingResult);
+            bindingResult.rejectValue("password", "passwordIncorrect",
+                    "기존 비밀번호를 잘못 입력하셨습니다. 다시 입력해 주세요.");
+            return "members/passwordEdit";
+        }
+        // TODO: 실제 패스워드 변경 로직
+        log.info(" === 실제 패스워드 변경 로직 실행 === ");
+
+        return "redirect:/";
     }
 }

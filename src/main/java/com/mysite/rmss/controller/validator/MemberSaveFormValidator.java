@@ -3,10 +3,12 @@ package com.mysite.rmss.controller.validator;
 import com.mysite.rmss.dto.member.MemberSaveForm;
 import com.mysite.rmss.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class MemberSaveFormValidator implements Validator {
