@@ -22,9 +22,10 @@ public class Shop {
     private String shopTitle;
 
     @Column(unique = true)
-    private String path;
+    private String url;
 
-    private String description;
+    private String description; // 소개글
+    private String phoneNumeber; // 고객센터 번호
 
 
     // TODO: 쇼핑몰의 아이템 리스트

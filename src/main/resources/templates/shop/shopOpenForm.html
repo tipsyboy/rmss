@@ -1,0 +1,66 @@
+<html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
+<section class="container px-4 px-lg-5 mt-5 my-5">
+    <div class="py-5 text-center">
+        <h2>쇼핑몰 개설</h2>
+    </div>
+
+    <div class="row justify-content-center">
+        <form class="col-sm-6" th:action="@{#}" th:object="${shopOpenForm}" method="post">
+
+            <!-- 쇼핑몰 이름 -->
+            <div class="form-group mb-4">
+                <label for="shopTitle" class="form-label">쇼핑몰 이름</label>
+                <input id="shopTitle" type="text" class="form-control" placeholder="쇼핑몰 이름"
+                       th:errorclass="border-danger" th:field="*{shopTitle}"/>
+                <p id="titleHelp" class="form-text text-muted">
+                    쇼핑몰 이름을 입력을 2자 이상 20자 이하로 입력해주세요.
+                </p>
+                <p class="text-danger" th:errors="*{shopTitle}">쇼핑몰 이름 에러</p>
+            </div>
+
+            <!-- 쇼핑몰 URL -->
+            <div class="form-group mb-4">
+                <label for="url" class="form-label">쇼핑몰 URL</label>
+                <input id="url" type="text" class="form-control" placeholder="예) my-shop"
+                       th:errorclass="border-danger" th:field="*{url}"/>
+                <p id="urlHelp1" class="form-text text-muted">
+                    공백없이 영문 소문자와 숫자, 대시(-), 언더스코어(_)로 3자 이상 20자 이하로 입력해주세요.<br/>
+                    쇼핑몰 주소로 사용됩니다.
+                    예) /shop/my-shop
+                </p>
+                <small id="urlHelp2" class="form-text text-danger">이후 수정이 불가합니다.</small>
+                <p class="text-danger" th:errors="*{url}">url 에러</p>
+            </div>
+
+            <!-- 쇼핑몰 전화번호 -->
+            <div class="form-group mb-4">
+                <label for="phoneNumber" class="form-label">쇼핑몰 고객센터 전화번호</label>
+                <input id="phoneNumber" type="text" class="form-control" placeholder="고객센터 전화번호"
+                       th:errorclass="border-danger" th:field="*{phoneNumber}"/>
+                <small id="phoneNumberHelp" class="form-text text-muted">
+                    고객센터 전화번호를 입력해주세요.
+                    구매자의 주문내역에 항상 노출됩니다.
+                </small>
+                <p class="text-danger" th:errors="*{phoneNumber}">전화번호 에러</p>
+            </div>
+
+            <!-- 쇼핑몰 소개글 -->
+            <div class="form-group mb-4">
+                <label for="description" class="form-label">소개글</label>
+                <input id="description" type="text" class="form-control" placeholder="소개글"
+                       th:errorclass="border-danger" th:field="*{description}" maxlength="100"/>
+                <small id="descriptionHelp" class="form-text text-muted">
+                </small>
+                <p class="text-danger" th:errors="*{description}">소개글 에러</p>
+            </div>
+
+
+            <div class="form-group mt-4">
+                <button class="btn btn-primary btn-block" type="submit" aria-describedby="submitHelp">
+                    개설하기
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+</html>
