@@ -107,7 +107,8 @@ public class ProfileController {
     @PostMapping("/password/edit")
     public String passwordEdit(@Valid @ModelAttribute("passwordEditForm") MemberPasswordEditForm passwordEditForm,
                                BindingResult bindingResult,
-                               @CurrentMember Member currentMember) {
+                               @CurrentMember Member currentMember,
+                               RedirectAttributes redirectAttributes) {
 
         if (!passwordEncoder.matches(passwordEditForm.getPassword(), currentMember.getPassword())) {
             bindingResult.rejectValue("password", "passwordIncorrect",
@@ -123,7 +124,8 @@ public class ProfileController {
 
         renewAuthenticationAfterPasswordEdit(currentMember, passwordEditForm);
 
-        return "redirect:/";
+        redirectAttributes.addFlashAttribute("message", "비밀번호가 변경되었습니다.");
+        return "redirect:/profile/password/edit";
     }
 
     private void renewAuthenticationAfterPasswordEdit(Member currentMember,
