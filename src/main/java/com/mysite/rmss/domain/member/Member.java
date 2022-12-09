@@ -1,12 +1,10 @@
 package com.mysite.rmss.domain.member;
 
+import com.mysite.rmss.domain.shop.Shop;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Entity
@@ -25,6 +23,11 @@ public class Member {
     private String password; // 비밀번호
 
     private String bio; // 한 줄 소개
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
+
 
     // TODO: Embedded 타입으로 이후에 Address 를 추가할 것
 
