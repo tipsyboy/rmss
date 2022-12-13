@@ -5,7 +5,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <form class="col-sm-6" th:action="@{#}" th:object="${shopOpenForm}" method="post">
+        <form class="col-sm-6" th:action="@{/shop/open}" th:object="${shopOpenForm}" method="post">
 
             <!-- 쇼핑몰 이름 -->
             <div class="form-group mb-4">
@@ -38,7 +38,7 @@
                 <input id="phoneNumber" type="text" class="form-control" placeholder="고객센터 전화번호"
                        th:errorclass="border-danger" th:field="*{phoneNumber}"/>
                 <small id="phoneNumberHelp" class="form-text text-muted">
-                    고객센터 전화번호를 입력해주세요.
+                    고객센터 전화번호를 숫자만 입력해주세요.
                     구매자의 주문내역에 항상 노출됩니다.
                 </small>
                 <p class="text-danger" th:errors="*{phoneNumber}">전화번호 에러</p>
@@ -47,8 +47,9 @@
             <!-- 쇼핑몰 소개글 -->
             <div class="form-group mb-4">
                 <label for="description" class="form-label">소개글</label>
-                <input id="description" type="text" class="form-control" placeholder="소개글"
-                       th:errorclass="border-danger" th:field="*{description}" maxlength="100"/>
+                <textarea id="description" type="text" class="form-control" placeholder="소개글"
+                       th:errorclass="border-danger" th:field="*{description}" maxlength="100">
+                </textarea>
                 <small id="descriptionHelp" class="form-text text-muted">
                 </small>
                 <p class="text-danger" th:errors="*{description}">소개글 에러</p>
