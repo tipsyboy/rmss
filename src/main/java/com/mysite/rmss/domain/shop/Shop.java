@@ -1,11 +1,10 @@
 package com.mysite.rmss.domain.shop;
 
 import com.mysite.rmss.domain.member.Member;
+import com.mysite.rmss.dto.shop.ShopOpenForm;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Entity
@@ -34,8 +33,24 @@ public class Shop {
 //    private Set<Category> categories = new HashSet<>();
 
 
+    // ===== 연관관계? ===== //
+    private void mappingMember(Member member) {
+        this.member = member;
+        member.setShop(this);
+    }
+
     // ===== 생성 ===== //
     protected Shop() {}
+
+    public static Shop of(Member member, ShopOpenForm shopOpenForm) {
+        Shop shop = new Shop();
+        shop.mappingMember(member);
+        shop.shopTitle = shopOpenForm.getShopTitle();
+        shop.url = shopOpenForm.getUrl();
+        shop.description = shopOpenForm.getDescription();
+        shop.phoneNumeber = shop.getPhoneNumeber();
+        return shop;
+    }
 
 
 }

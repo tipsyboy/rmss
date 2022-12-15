@@ -42,6 +42,10 @@ public class Member {
         this.password = password;
     }
 
+    // ===== ===== //
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
 
     // ===== update ===== //
     public void updateProfile(String bio) {
