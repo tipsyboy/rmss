@@ -31,7 +31,13 @@ public class ShopController {
     }
 
     @GetMapping("/open")
-    public String openShopForm(@ModelAttribute ShopOpenForm shopOpenForm) {
+    public String openShopForm(@ModelAttribute ShopOpenForm shopOpenForm,
+                               @CurrentMember Member currentMember) {
+        if (currentMember.getShop() != null) {
+            // TODO: 접근 불가 - 이미 쇼핑몰이 있는 경우 Shop 관리 페이지로 리다이렉트, 시큐리티로 해결할 수 있나?
+            return "redirect:/";
+        }
+
         return "shop/shopOpenForm";
     }
 
@@ -40,16 +46,14 @@ public class ShopController {
                            BindingResult bindingResult,
                            @CurrentMember Member currentMember) {
 
-        // TODO: OPEN FORM 검증 - 에러 있으면 처리 - 뭘 검증 해야할까?
-        // TODO: 중복 URL, 샵 이름, bean validation
         if (bindingResult.hasErrors()) {
             log.info("bindingResult 에러있음={}", bindingResult);
-            return "redirect:/";
+            return "shop/shopOpenForm";
         }
 
-        // TODO: Redirect shop page or 관리 페이지 - url 처리 방법
         shopService.openShop(currentMember.getId(), shopOpenForm);
         return "redirect:/shop/" + URLEncoder.encode(shopOpenForm.getUrl(), StandardCharsets.UTF_8);
+
 
         // TODO: 생성 html 페이지 만들기
         // TODO: 테스팅
