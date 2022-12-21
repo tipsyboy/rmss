@@ -17,7 +17,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-@RequestMapping("/shop")
 @RequiredArgsConstructor
 @Controller
 public class ShopController {
@@ -52,10 +51,15 @@ public class ShopController {
         }
 
         shopService.openShop(currentMember.getId(), shopOpenForm);
-        return "redirect:/shop/" + URLEncoder.encode(shopOpenForm.getUrl(), StandardCharsets.UTF_8);
+        return "redirect:/shop/" + URLEncoder.encode(shopOpenForm.getUrl(), StandardCharsets.UTF_8) + "/settings";
+    }
 
+    // shop 관리 페이지
+    @GetMapping("/shop/{shopPath}/settings")
+    public String viewShopSetting(@PathVariable String shopPath) {
+        // TODO: shop 의 setting 페이지
+        // TODO: 관리자 권한이 없으면 접근이 불가해야 함
 
-        // TODO: 생성 html 페이지 만들기
-        // TODO: 테스팅
+        return "shop/shopSettings";
     }
 }

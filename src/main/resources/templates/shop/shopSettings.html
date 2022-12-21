@@ -1,0 +1,35 @@
+<html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
+<section class="container px-4 px-lg-5 mt-5 my-5">
+    <h1 class="border-bottom pb-2 mb-2">쇼핑몰 이름</h1>
+    <div class="row-2">
+        <div th:replace="~{/fragments/fragment :: shopSettingMenu ('itemSetting')}"></div>
+    </div>
+    <div class="tab-content" id="pills-tabContent">
+        <table class="table">
+            <thead class="table-dark">
+            <tr class="text-center">
+                <th>#</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>재고 수량</th>
+                <th>상태</th>
+            </tr>
+            </thead>
+
+<!--            <tbody>-->
+<!--            <tr class="text-center" th:each="post : ${postList}">-->
+<!--                <td class="text-start">-->
+<!--                    <a th:href="@{|/post/view/${post.id}|}" th:text="${post.title}"></a>-->
+<!--                    <span class="text-danger small ms-1"-->
+<!--                          th:if="${post.replyCnt > 0}"-->
+<!--                          th:text="${post.replyCnt}">-->
+<!--                        </span>-->
+<!--                </td>-->
+<!--                <td th:text="${post.author}"></td>-->
+<!--                <td th:text="${#temporals.format(post.lastModifiedDate, 'yyyy-MM-dd HH:mm')}"></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+        </table>
+    </div>
+</section>
+</html>

@@ -60,3 +60,16 @@
         <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'password'} ? active" href="#" th:href="@{/profile/password/edit}">비밀번호 변경</a>
     </li>
 </ul>
+
+<!-- shop settings page navbar -->
+<ul th:fragment="shopSettingMenu (currentMenu)" class="nav nav-pills mb-3">
+    <li class="nav-item">
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'itemSetting'} ? active" href="#" th:href="@{/profile/settings}">상품 관리</a>
+    </li>
+    <li class="nav-item">
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'category'} ? active" href="#" th:href="@{/profile/password/edit}">카테고리 관리</a>
+    </li>
+    <li class="nav-item">
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'setting'} ? active" href="#" th:href="@{/profile/password/edit}">설정</a>
+    </li>
+</ul>
