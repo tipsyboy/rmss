@@ -57,6 +57,7 @@ public class ShopController {
     // shop 관리 페이지
     @GetMapping("/shop/{shopPath}/settings")
     public String viewShopSetting(@PathVariable String shopPath) {
+        // TODO: shop path 에 일치하지 않는 쇼핑몰이 있는 경우
         // TODO: shop 의 setting 페이지
         // TODO: 관리자 권한이 없으면 접근이 불가해야 함
 

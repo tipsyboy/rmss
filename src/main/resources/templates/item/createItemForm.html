@@ -1,0 +1,57 @@
+<html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
+<section class="container px-4 px-lg-5 mt-5 my-5">
+    <div class="py-5 text-center">
+        <h2>상품 등록</h2>
+    </div>
+
+    <div class="row justify-content-center">
+        <form class="col-sm-6" th:action="@{#}" th:object="${itemCreateForm}" method="post">
+            <!-- 상품명 -->
+            <div class="form-group mb-2">
+                <label for="itemName" class="form-label">상품명</label>
+                <input id="itemName" type="text" class="form-control" placeholder="상품명을 입력하세요."
+                       th:errorclass="border-danger" th:field="*{itemName}"/>
+                <small id="nameHelp" class="form-text text-muted">
+                    상품명을 30자 이내로 입력해주세요.
+                </small>
+                <small class="text-danger" th:errors="*{itemName}">상품명 에러</small>
+            </div>
+
+            <!-- 상품 가격 -->
+            <div class="form-group mb-2">
+                <label for="price" class="form-label">상품 가격</label>
+                <input id="price" type="number" class="form-control"
+                       th:errorclass="border-danger" th:field="*{price}" aria-describedby="priceHelp"/>
+                <small id="priceHelp" class="form-text text-muted">
+                    상품 판매 가격 1 ~ 2147483647 원을 입력하세요.
+                </small>
+                <small class="text-danger" th:errors="*{price}">가격 에러</small>
+            </div>
+
+            <!-- 재고 -->
+            <div class="form-group mb-2">
+                <label for="stock" class="form-label">비밀번호</label>
+                <input id="stock" type="number" class="form-control" aria-describedby="stockHelp"
+                       th:errorclass="border-danger" th:field="*{stock}"/>
+                <small id="stockHelp" class="form-text text-muted">
+                    상품 재고를 등록해주세요.
+                </small>
+                <small class="text-danger" th:errors="*{stock}">재고 에러</small>
+            </div>
+
+            <!-- 상품 소개 short? -->
+            <div class="form-group mb-2">
+                <label for="shortDescription" class="form-label">이메일</label>
+                <input id="shortDescription" type="text" class="form-control" aria-describedby="shortDescriptionHelp"
+                       th:errorclass="border-danger" th:field="*{shortDescription}" />
+                <small id="shortDescriptionHelp" class="form-text text-muted">상품의 간략한 소개를 작성해주세요.</small>
+                <small class="text-danger" th:errors="*{shortDescription}">상품 소개 에러</small>
+            </div>
+
+            <div class="form-group mt-4">
+                <button class="btn btn-primary btn-block" type="submit" aria-describedby="submitHelp"> 상품 등록하기</button>
+            </div>
+        </form>
+    </div>
+</section>
+</html>
