@@ -8,6 +8,7 @@ import com.mysite.rmss.service.shop.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ShopController {
         dataBinder.addValidators(shopOpenFormValidator);
     }
 
-    @GetMapping("/open")
+    @GetMapping("/shop/open")
     public String openShopForm(@ModelAttribute ShopOpenForm shopOpenForm,
                                @CurrentMember Member currentMember) {
         if (currentMember.getShop() != null) {
@@ -40,7 +41,7 @@ public class ShopController {
         return "shop/shopOpenForm";
     }
 
-    @PostMapping("/open")
+    @PostMapping("/shop/open")
     public String openShop(@Valid @ModelAttribute ShopOpenForm shopOpenForm,
                            BindingResult bindingResult,
                            @CurrentMember Member currentMember) {
@@ -51,16 +52,17 @@ public class ShopController {
         }
 
         shopService.openShop(currentMember.getId(), shopOpenForm);
-        return "redirect:/shop/" + URLEncoder.encode(shopOpenForm.getUrl(), StandardCharsets.UTF_8) + "/settings";
+        return "redirect:/" + URLEncoder.encode(shopOpenForm.getUrl(), StandardCharsets.UTF_8) + "/settings";
     }
 
     // shop 관리 페이지
-    @GetMapping("/shop/{shopPath}/settings")
-    public String viewShopSetting(@PathVariable String shopPath) {
+    @GetMapping("/{shopPath}/settings")
+    public String viewShopSetting(@PathVariable String shopPath,
+                                  Model model) {
         // TODO: shop path 에 일치하지 않는 쇼핑몰이 있는 경우
         // TODO: shop 의 setting 페이지
         // TODO: 관리자 권한이 없으면 접근이 불가해야 함
-
+        model.addAttribute("shopPath", shopPath);
         return "shop/shopSettings";
     }
 }

@@ -5,7 +5,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <form class="col-sm-6" th:action="@{#}" th:object="${itemCreateForm}" method="post">
+        <form class="col-sm-6" th:action="@{|/${shopPath}/items/add|}" th:object="${itemCreateForm}" method="post">
             <!-- 상품명 -->
             <div class="form-group mb-2">
                 <label for="itemName" class="form-label">상품명</label>
