@@ -19,7 +19,7 @@
 
             <!-- 상품 가격 -->
             <div class="form-group mb-2">
-                <label for="price" class="form-label">상품 가격</label>
+                <label for="price" class="form-label">가격</label>
                 <input id="price" type="number" class="form-control"
                        th:errorclass="border-danger" th:field="*{price}" aria-describedby="priceHelp"/>
                 <small id="priceHelp" class="form-text text-muted">
@@ -30,18 +30,18 @@
 
             <!-- 재고 -->
             <div class="form-group mb-2">
-                <label for="stock" class="form-label">비밀번호</label>
+                <label for="stock" class="form-label">재고</label>
                 <input id="stock" type="number" class="form-control" aria-describedby="stockHelp"
                        th:errorclass="border-danger" th:field="*{stock}"/>
                 <small id="stockHelp" class="form-text text-muted">
-                    상품 재고를 등록해주세요.
+                    재고 (1 ~ 2147483647 개) 를 입력하세요.
                 </small>
                 <small class="text-danger" th:errors="*{stock}">재고 에러</small>
             </div>
 
             <!-- 상품 소개 short? -->
             <div class="form-group mb-2">
-                <label for="shortDescription" class="form-label">이메일</label>
+                <label for="shortDescription" class="form-label">상품 간단 소개</label>
                 <input id="shortDescription" type="text" class="form-control" aria-describedby="shortDescriptionHelp"
                        th:errorclass="border-danger" th:field="*{shortDescription}" />
                 <small id="shortDescriptionHelp" class="form-text text-muted">상품의 간략한 소개를 작성해주세요.</small>

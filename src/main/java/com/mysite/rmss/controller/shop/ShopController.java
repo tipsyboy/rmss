@@ -34,7 +34,7 @@ public class ShopController {
     public String openShopForm(@ModelAttribute ShopOpenForm shopOpenForm,
                                @CurrentMember Member currentMember) {
         if (currentMember.getShop() != null) {
-            // TODO: 접근 불가 - 이미 쇼핑몰이 있는 경우 Shop 관리 페이지로 리다이렉트, 시큐리티로 해결할 수 있나?
+            // TODO: 접근 불가 - 이미 쇼핑몰이 있는 경우 Shop 관리 페이지로 리다이렉트, 시큐리티나 어노테이션으로 해결할 수 있나?
             return "redirect:/";
         }
 
@@ -60,8 +60,8 @@ public class ShopController {
     public String viewShopSetting(@PathVariable String shopPath,
                                   Model model) {
         // TODO: shop path 에 일치하지 않는 쇼핑몰이 있는 경우
-        // TODO: shop 의 setting 페이지
         // TODO: 관리자 권한이 없으면 접근이 불가해야 함
+
         model.addAttribute("shopPath", shopPath);
         return "shop/shopSettings";
     }
