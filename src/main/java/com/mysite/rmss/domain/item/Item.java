@@ -1,11 +1,9 @@
 package com.mysite.rmss.domain.item;
 
+import com.mysite.rmss.domain.shop.Shop;
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -22,6 +20,10 @@ public class Item {
     private Integer price;
     private Integer stock;
     private LocalDateTime createDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shop_id")
+    private Shop shop;
 
     // ===== 생성 ===== //
     protected Item() {}

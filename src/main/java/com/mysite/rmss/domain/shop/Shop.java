@@ -1,10 +1,13 @@
 package com.mysite.rmss.domain.shop;
 
+import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.shop.ShopOpenForm;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -25,6 +28,10 @@ public class Shop {
 
     private String description; // 소개글
     private String phoneNumeber; // 고객센터 번호
+
+    @OneToMany(mappedBy = "shop")
+    private List<Item> items = new ArrayList<>();
+
 
 
     // TODO: 쇼핑몰의 아이템 리스트
