@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -43,7 +45,7 @@ public class ItemController {
         }
 
         itemService.addItem(currentMember.getId(), itemCreateForm);
-        return "redirect:/";
+        return "redirect:/{shopPath}/settings";
     }
 
 }

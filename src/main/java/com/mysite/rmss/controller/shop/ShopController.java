@@ -3,7 +3,9 @@ package com.mysite.rmss.controller.shop;
 import com.mysite.rmss.config.auth.CurrentMember;
 import com.mysite.rmss.controller.validator.ShopOpenFormValidator;
 import com.mysite.rmss.domain.member.Member;
+import com.mysite.rmss.dto.item.ItemResponseDto;
 import com.mysite.rmss.dto.shop.ShopOpenForm;
+import com.mysite.rmss.service.item.ItemService;
 import com.mysite.rmss.service.shop.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,6 +27,7 @@ public class ShopController {
 
     private final ShopOpenFormValidator shopOpenFormValidator;
     private final ShopService shopService;
+    private final ItemService itemService;
 
     @InitBinder("shopOpenForm")
     public void openFormValidation(WebDataBinder dataBinder) {
@@ -58,9 +62,12 @@ public class ShopController {
     // shop 관리 페이지
     @GetMapping("/{shopPath}/settings")
     public String viewShopSetting(@PathVariable String shopPath,
-                                  Model model) {
+                                  Model model,
+                                  @CurrentMember Member currentMember) {
         // TODO: shop path 에 일치하지 않는 쇼핑몰이 있는 경우
         // TODO: 관리자 권한이 없으면 접근이 불가해야 함
+        List<ItemResponseDto> items = itemService.findAllByShop(currentMember.getShop().getId());
+        model.addAttribute("items", items);
 
         model.addAttribute("shopPath", shopPath);
         return "shop/shopSettings";
