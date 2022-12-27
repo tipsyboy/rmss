@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public class ItemRepository {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public Long save(Item item) {
         em.persist(item);

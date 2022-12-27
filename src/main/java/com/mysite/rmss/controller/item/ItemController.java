@@ -1,6 +1,9 @@
 package com.mysite.rmss.controller.item;
 
+import com.mysite.rmss.config.auth.CurrentMember;
+import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.item.ItemCreateForm;
+import com.mysite.rmss.service.item.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,6 +21,8 @@ import javax.validation.Valid;
 @Controller
 public class ItemController {
 
+    private final ItemService itemService;
+
     @GetMapping("/{shopPath}/items/add")
     public String createItemForm(@PathVariable String shopPath,
                                  @ModelAttribute ItemCreateForm itemCreateForm,
@@ -30,14 +35,14 @@ public class ItemController {
     @PostMapping("/{shopPath}/items/add")
     public String createItem(@PathVariable String shopPath,
                              @Valid @ModelAttribute ItemCreateForm itemCreateForm,
-                             BindingResult bindingResult) {
+                             BindingResult bindingResult,
+                             @CurrentMember Member currentMember) {
 
         if (bindingResult.hasErrors()) {
             return "item/createItemForm";
         }
 
-        // TODO: Item 생성 service 호출
-        // TODO: redirect
+        itemService.addItem(currentMember.getId(), itemCreateForm);
         return "redirect:/";
     }
 

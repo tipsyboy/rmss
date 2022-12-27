@@ -1,6 +1,7 @@
 package com.mysite.rmss.domain.item;
 
 import com.mysite.rmss.domain.shop.Shop;
+import com.mysite.rmss.dto.item.ItemCreateForm;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -25,7 +26,23 @@ public class Item {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
+
+    private void mappingShop(Shop shop) {
+        this.shop = shop;
+        shop.getItems().add(this);
+    }
+
     // ===== 생성 ===== //
     protected Item() {}
 
+    public static Item of(Shop shop, ItemCreateForm itemCreateForm) {
+        Item item = new Item();
+        item.mappingShop(shop);
+        item.itemName = itemCreateForm.getItemName();
+        item.description = itemCreateForm.getShortDescription();
+        item.price = itemCreateForm.getPrice();
+        item.stock = itemCreateForm.getStock();
+        item.createDate = LocalDateTime.now();
+        return item;
+    }
 }
