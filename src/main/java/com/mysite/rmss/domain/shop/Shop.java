@@ -27,7 +27,7 @@ public class Shop {
     private String url;
 
     private String description; // 소개글
-    private String phoneNumeber; // 고객센터 번호
+    private String phoneNumber; // 고객센터 번호
 
     @OneToMany(mappedBy = "shop")
     private List<Item> items = new ArrayList<>();
@@ -55,7 +55,7 @@ public class Shop {
         shop.shopTitle = shopOpenForm.getShopTitle();
         shop.url = shopOpenForm.getUrl();
         shop.description = shopOpenForm.getDescription();
-        shop.phoneNumeber = shop.getPhoneNumeber();
+        shop.phoneNumber = shop.getPhoneNumber();
         return shop;
     }
 

@@ -4,6 +4,7 @@ import com.mysite.rmss.config.auth.CurrentMember;
 import com.mysite.rmss.controller.validator.ShopOpenFormValidator;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.item.ItemResponseDto;
+import com.mysite.rmss.dto.shop.ShopInfoResponseDto;
 import com.mysite.rmss.dto.shop.ShopOpenForm;
 import com.mysite.rmss.service.item.ItemService;
 import com.mysite.rmss.service.shop.ShopService;
@@ -60,13 +61,24 @@ public class ShopController {
     }
 
     // shop 관리 페이지
+    @GetMapping("/{shopPath}")
+    public String viewShopMain(@PathVariable String shopPath,
+                               Model model) {
+        // TODO: 존재하지 않는 쇼핑몰 접근 불가
+
+        ShopInfoResponseDto shopInfoDto = shopService.getShopInfo(shopPath);
+        List<ItemResponseDto> items = itemService.findAllByShopPath(shopPath);
+
+        model.addAttribute("shopInfoDto", shopInfoDto);
+        return "shop/shopMain";
+    }
+
     @GetMapping("/{shopPath}/settings")
     public String viewShopSetting(@PathVariable String shopPath,
-                                  Model model,
-                                  @CurrentMember Member currentMember) {
+                                  Model model) {
         // TODO: shop path 에 일치하지 않는 쇼핑몰이 있는 경우
         // TODO: 관리자 권한이 없으면 접근이 불가해야 함
-        List<ItemResponseDto> items = itemService.findAllByShop(currentMember.getShop().getId());
+        List<ItemResponseDto> items = itemService.findAllByShopPath(shopPath);
         model.addAttribute("items", items);
 
         model.addAttribute("shopPath", shopPath);

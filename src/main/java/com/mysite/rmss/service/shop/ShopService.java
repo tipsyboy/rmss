@@ -2,6 +2,7 @@ package com.mysite.rmss.service.shop;
 
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.shop.Shop;
+import com.mysite.rmss.dto.shop.ShopInfoResponseDto;
 import com.mysite.rmss.dto.shop.ShopOpenForm;
 import com.mysite.rmss.repository.member.MemberRepository;
 import com.mysite.rmss.repository.shop.ShopRepository;
@@ -26,4 +27,12 @@ public class ShopService {
         shopRepository.save(shop);
         return shop.getId();
     }
+
+    public ShopInfoResponseDto getShopInfo(String shopPath) {
+        Shop findShop = shopRepository.findByUrl(shopPath)
+                .orElseThrow(() -> new IllegalArgumentException("쇼핑몰을 찾을 수 없습니다. url=" + shopPath));
+
+        return new ShopInfoResponseDto(findShop);
+    }
+
 }

@@ -30,9 +30,9 @@ public class ItemRepository {
                 .stream().findAny();
     }
 
-    public List<Item> findAllByShop(Long shopId) {
-        return em.createQuery("select i from Item i where i.shop.id = :shopId", Item.class)
-                .setParameter("shopId", shopId)
+    public List<Item> findAllByShopPath(String shopPath) {
+        return em.createQuery("select i from Item i where i.shop.url = :shopPath", Item.class)
+                .setParameter("shopPath", shopPath)
                 .getResultList();
     }
 }

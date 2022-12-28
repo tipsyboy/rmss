@@ -28,6 +28,7 @@ public class Item {
     private Shop shop;
 
 
+    // ===== =====//
     private void mappingShop(Shop shop) {
         this.shop = shop;
         shop.getItems().add(this);

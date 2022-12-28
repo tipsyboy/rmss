@@ -7,8 +7,6 @@ import com.mysite.rmss.dto.item.ItemCreateForm;
 import com.mysite.rmss.dto.item.ItemResponseDto;
 import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
-import com.mysite.rmss.repository.shop.ShopRepository;
-import com.mysite.rmss.service.shop.ShopService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,8 +32,8 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    public List<ItemResponseDto> findAllByShop(Long shopId) {
-        return itemRepository.findAllByShop(shopId)
+    public List<ItemResponseDto> findAllByShopPath(String shopPath) {
+        return itemRepository.findAllByShopPath(shopPath)
                 .stream().map(ItemResponseDto::new)
                 .collect(Collectors.toList());
     }
