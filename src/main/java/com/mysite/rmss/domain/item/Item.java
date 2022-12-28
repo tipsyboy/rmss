@@ -2,6 +2,7 @@ package com.mysite.rmss.domain.item;
 
 import com.mysite.rmss.domain.shop.Shop;
 import com.mysite.rmss.dto.item.ItemCreateForm;
+import com.mysite.rmss.exception.NotEnoughStockException;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -44,5 +45,17 @@ public class Item {
         item.stock = itemCreateForm.getStock();
         item.createDate = LocalDateTime.now();
         return item;
+    }
+
+    // ===== ===== //
+    public void addStock(int quantity) {
+        this.stock += quantity;
+    }
+
+    public void removeStock(int quantity) {
+        if (this.stock - quantity < 0) {
+            throw new NotEnoughStockException("재고가 부족합니다.");
+        }
+        this.stock -= quantity;
     }
 }
