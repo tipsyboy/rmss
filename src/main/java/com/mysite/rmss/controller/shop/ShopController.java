@@ -70,6 +70,7 @@ public class ShopController {
         List<ItemResponseDto> items = itemService.findAllByShopPath(shopPath);
 
         model.addAttribute("shopInfoDto", shopInfoDto);
+        model.addAttribute("items", items);
         return "shop/shopMain";
     }
 

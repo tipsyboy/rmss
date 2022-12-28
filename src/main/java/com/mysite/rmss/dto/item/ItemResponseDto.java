@@ -13,6 +13,7 @@ public class ItemResponseDto {
     private Integer price;
     private Integer stock;
     private LocalDateTime createDate;
+    private String description;
 //    private Boolean status; // 상태
 
     public ItemResponseDto(Item entity) {
@@ -20,6 +21,7 @@ public class ItemResponseDto {
         this.itemName = entity.getItemName();
         this.price = entity.getPrice();
         this.stock = entity.getStock();
+        this.description = entity.getDescription();
         this.createDate = entity.getCreateDate();
     }
 }

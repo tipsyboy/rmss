@@ -32,6 +32,7 @@ public class ShopService {
         Shop findShop = shopRepository.findByUrl(shopPath)
                 .orElseThrow(() -> new IllegalArgumentException("쇼핑몰을 찾을 수 없습니다. url=" + shopPath));
 
+        // TODO: 이 과정에서 Shop itemList 를 Dto 로 변환 시켜서 ShopInfoResponseDto 에 추가하면 네트워크 한 번만 타도 되는거 아님?
         return new ShopInfoResponseDto(findShop);
     }
 
