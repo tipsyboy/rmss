@@ -37,4 +37,9 @@ public class ItemService {
                 .stream().map(ItemResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    public ItemResponseDto findById(Long itemId) {
+        return new ItemResponseDto(itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다. itemId=" + itemId)));
+    }
 }

@@ -60,7 +60,7 @@ public class ShopController {
         return "redirect:/" + URLEncoder.encode(shopOpenForm.getUrl(), StandardCharsets.UTF_8) + "/settings";
     }
 
-    // shop 관리 페이지
+
     @GetMapping("/{shopPath}")
     public String viewShopMain(@PathVariable String shopPath,
                                Model model) {
@@ -74,6 +74,21 @@ public class ShopController {
         return "shop/shopMain";
     }
 
+    @GetMapping("/{shopPath}/items/{itemId}")
+    public String viewShopItemDetail(@PathVariable String shopPath,
+                                     @PathVariable Long itemId,
+                                     Model model) {
+
+        ItemResponseDto itemResponseDto = itemService.findById(itemId);
+        ShopInfoResponseDto shopInfoDto = shopService.getShopInfo(shopPath);
+        model.addAttribute("shopInfoDto", shopInfoDto);
+        model.addAttribute("itemResponseDto", itemResponseDto);
+
+        return "shop/shopItemDetail";
+    }
+
+
+    // shop 관리 페이지
     @GetMapping("/{shopPath}/settings")
     public String viewShopSetting(@PathVariable String shopPath,
                                   Model model) {

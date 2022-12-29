@@ -7,10 +7,10 @@
 <!-- navbar -->
 <nav th:replace="~{fragments/fragment :: navbarFrag}"></nav>
 
-<header class="bg-dark py-3">
-<div class="container px-4 px-lg-5 my-5">
+<header class="bg-dark py-2">
+<div class="container px-3 px-lg-3 my-3">
     <div class="text-center text-white" th:object="${shopInfoDto}">
-        <h1 class="display-4 fw-bolder" th:text="${shopInfoDto.shopTitle}">Shop Name</h1>
+        <h1 class="display-3 fw-bolder" th:text="${shopInfoDto.shopTitle}">Shop Name</h1>
         <p class="lead fw-normal text-white-50 mb-0" th:text="${shopInfoDto.description}">Shop Description</p>
     </div>
 </div>
