@@ -4,19 +4,21 @@
         <div class="row gx-4 gx-lg-5 align-items-center" th:object="${itemResponseDto}">
             <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." /></div>
             <div class="col-md-6">
-                <div class="small mb-1">여긴 뭐지</div>
+                <div class="small mb-1">아이디 값?</div>
                 <h1 class="display-5 fw-bolder" th:text="${itemResponseDto.itemName}">상품명</h1>
                 <div class="fs-5 mb-5">
                     <span th:text="${itemResponseDto.price}">가격</span>
                 </div>
                 <p class="lead" th:text="${itemResponseDto.description}">제품 설명 긴글</p>
-                <div class="d-flex">
+
+                <form class="d-flex" th:object=${OrderRequestDto} th:action="@{|/order/orderSheet|}">
                     <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 3rem" />
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <!--히든으로 정보들 넣어?-->
+                    <button class="btn btn-outline-dark flex-shrink-0" type="submit" >
                         <i class="bi-cart-fill me-1"></i>
-                        장바구니
+                        주문
                     </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
