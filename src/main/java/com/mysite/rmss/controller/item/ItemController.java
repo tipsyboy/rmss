@@ -29,6 +29,7 @@ public class ItemController {
     public String createItemForm(@PathVariable String shopPath,
                                  @ModelAttribute ItemCreateForm itemCreateForm,
                                  Model model) {
+        // TODO: 쇼핑몰의 주인이 아닌 사람은 접근할 수 없어야함.
 
         model.addAttribute("shopPath", shopPath);
         return "item/createItemForm";

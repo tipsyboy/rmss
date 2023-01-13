@@ -3,6 +3,7 @@ package com.mysite.rmss.dto.item;
 import com.mysite.rmss.domain.item.Item;
 import lombok.Getter;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
 @Getter
@@ -12,6 +13,7 @@ public class ItemResponseDto {
     private String itemName;
     private Integer price;
     private Integer stock;
+    private String priceWon;
     private LocalDateTime createDate;
     private String description;
 //    private Boolean status; // 상태
@@ -23,5 +25,11 @@ public class ItemResponseDto {
         this.stock = entity.getStock();
         this.description = entity.getDescription();
         this.createDate = entity.getCreateDate();
+        this.priceWon = formatWon(entity.getPrice());
+    }
+
+    private String formatWon(Integer price) {
+        DecimalFormat df = new DecimalFormat("###,###");
+        return df.format(price);
     }
 }
