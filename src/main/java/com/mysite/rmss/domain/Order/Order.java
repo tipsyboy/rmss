@@ -6,6 +6,8 @@ import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Table(name = "orders")
@@ -23,6 +25,9 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id")
     private Shop shop; // 판매 쇼핑몰
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
     private LocalDateTime orderDate;
 
