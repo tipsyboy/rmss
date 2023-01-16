@@ -1,10 +1,13 @@
 package com.mysite.rmss.domain.member;
 
+import com.mysite.rmss.domain.Order.Order;
 import com.mysite.rmss.domain.shop.Shop;
 import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -28,6 +31,8 @@ public class Member {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
+    @OneToMany(mappedBy = "member")
+    private List<Order> orderList = new ArrayList<>();
 
     // TODO: Embedded 타입으로 이후에 Address 를 추가할 것
 

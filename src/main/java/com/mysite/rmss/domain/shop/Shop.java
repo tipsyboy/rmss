@@ -1,5 +1,6 @@
 package com.mysite.rmss.domain.shop;
 
+import com.mysite.rmss.domain.Order.Order;
 import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.shop.ShopOpenForm;
@@ -32,10 +33,9 @@ public class Shop {
     @OneToMany(mappedBy = "shop")
     private List<Item> items = new ArrayList<>();
 
+    @OneToMany(mappedBy = "shop")
+    private List<Order> orderList = new ArrayList<>();
 
-
-    // TODO: 쇼핑몰의 아이템 리스트
-//    private List<Item> items = new ArrayList<>();
     // TODO: 쇼핑몰의 대표 카테고리 - 3개로 제한?
 //    private Set<Category> categories = new HashSet<>();
 
