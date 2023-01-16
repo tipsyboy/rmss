@@ -1,4 +1,4 @@
-package com.mysite.rmss.domain.Order;
+package com.mysite.rmss.domain.order;
 
 public enum OrderStatus {
 

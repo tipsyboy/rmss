@@ -1,6 +1,6 @@
 package com.mysite.rmss.domain.shop;
 
-import com.mysite.rmss.domain.Order.Order;
+import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.shop.ShopOpenForm;

@@ -1,6 +1,6 @@
 package com.mysite.rmss.domain.member;
 
-import com.mysite.rmss.domain.Order.Order;
+import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.shop.Shop;
 import lombok.Builder;
 import lombok.Getter;

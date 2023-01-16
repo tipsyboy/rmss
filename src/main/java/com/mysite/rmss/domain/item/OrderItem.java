@@ -1,6 +1,7 @@
-package com.mysite.rmss.domain.Order;
+package com.mysite.rmss.domain.item;
 
 import com.mysite.rmss.domain.item.Item;
+import com.mysite.rmss.domain.order.Order;
 import lombok.Getter;
 
 import javax.persistence.*;

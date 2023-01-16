@@ -1,6 +1,6 @@
 package com.mysite.rmss.repository.order;
 
-import com.mysite.rmss.domain.Order.Order;
+import com.mysite.rmss.domain.order.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
