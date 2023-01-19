@@ -7,6 +7,7 @@ import com.mysite.rmss.dto.item.ItemCreateForm;
 import com.mysite.rmss.dto.item.ItemResponseDto;
 import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
+import com.mysite.rmss.repository.shop.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class ItemService {
 
+//    private final ShopRepository shopRepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
 
@@ -42,4 +44,15 @@ public class ItemService {
         return new ItemResponseDto(itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다. itemId=" + itemId)));
     }
+
+//    public List<ItemResponseDto> findAllItemByShopPathEntityRep(String shopPath) {
+//        // 이건 어떰?
+//
+//        Shop shop = shopRepository.findByUrl(shopPath)
+//                .orElseThrow(() -> new IllegalArgumentException("쇼핑몰을 찾을 수 없음"));
+//
+//        return shop.getItems()
+//                .stream().map(ItemResponseDto::new)
+//                .collect(Collectors.toList());
+//    }
 }

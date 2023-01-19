@@ -2,6 +2,7 @@ package com.mysite.rmss.domain.item;
 
 import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.order.Order;
+import com.mysite.rmss.dto.order.OrderRequestDto;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -22,6 +23,17 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    // order price
-    // count
+    private int orderPrice;
+
+    private int count; // 수량
+
+    // ===== 생성 메서드 ===== //
+    public static OrderItem of(Item item, OrderRequestDto requestDto) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.item = item;
+        orderItem.orderPrice = requestDto.getPrice();
+        orderItem.count = requestDto.getQuantity();
+
+        return orderItem;
+    }
 }
