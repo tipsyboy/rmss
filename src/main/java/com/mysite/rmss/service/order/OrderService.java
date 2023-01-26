@@ -3,6 +3,7 @@ package com.mysite.rmss.service.order;
 import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.item.OrderItem;
 import com.mysite.rmss.domain.member.Member;
+import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.shop.Shop;
 import com.mysite.rmss.dto.order.OrderRequestDto;
 import com.mysite.rmss.repository.member.MemberRepository;
@@ -24,6 +25,7 @@ public class OrderService {
     @Transactional
     public Long order (Long memberId, Long shopId) {
         // 필요: 고객정보 / 쇼핑몰 정보 / 주문 내역서
+        // TODO: OrderRequestDto 를 웹 계층으로부터 전달 받는다.
         OrderRequestDto orderRequestDto = new OrderRequestDto(1L, 1L, 10000, 2);
 
         Member member = memberRepository.findById(memberId)
@@ -37,12 +39,11 @@ public class OrderService {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품을 찾을 수 없습니다. itemId=" + orderRequestDto.getItemId()));
 
-        // TODO: 받은 주문 내역서(dto)로 배송정보 생성 -> Delivery class 정의
+        // TODO: 배송정보 생성 -> Delivery class 정의
 
-        // orderItem 생성
+        // TODO: OrderItem 이 여러개인 경우로 바꾸기 - 장바구니 구현!
         OrderItem orderItem = OrderItem.of(item, orderRequestDto);
-
-        // TODO: 생성한 orderItem 으로 order 를 생성함
+        Order.of(member, shop, orderItem);
 
         // TODO: repository 로 저장하면 끝
         return 1L;

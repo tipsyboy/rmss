@@ -36,4 +36,36 @@ public class Order {
     private OrderStatus orderStatus;
 
     protected Order() {}
+
+    // ===== 연관관계 세팅 ===== //
+    private void setMember(Member member) {
+        this.member = member;
+        member.getOrderList().add(this);
+    }
+
+    private void setShop(Shop shop) {
+        this.shop = shop;
+        shop.getOrderList().add(this);
+    }
+
+    private void addOrderItem(OrderItem orderItem) {
+        this.orderItemList.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    // ===== 생성 메서드 ===== //
+    public static Order of(Member member, Shop shop, OrderItem... orderItems) {
+        Order order = new Order();
+
+        // 연관관계 메서드
+        order.setMember(member);
+        order.setShop(shop);
+        for (OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
+        }
+        order.orderStatus = OrderStatus.ORDER;
+        order.orderDate = LocalDateTime.now();
+
+        return order;
+    }
 }
