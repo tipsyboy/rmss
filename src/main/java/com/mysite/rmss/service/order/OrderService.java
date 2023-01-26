@@ -43,9 +43,11 @@ public class OrderService {
 
         // TODO: OrderItem 이 여러개인 경우로 바꾸기 - 장바구니 구현!
         OrderItem orderItem = OrderItem.of(item, orderRequestDto);
-        Order.of(member, shop, orderItem);
+        Order order = Order.of(member, shop, orderItem);
 
         // TODO: repository 로 저장하면 끝
-        return 1L;
+        orderRepository.save(order);
+
+        return order.getId();
     }
 }
