@@ -30,7 +30,6 @@ public class IndexController {
             log.info("memberInfo={}", member.getPassword());
             log.info("memberInfo={}", member.getBio());
             welcome = member.getUsername();
-
         }
 
 

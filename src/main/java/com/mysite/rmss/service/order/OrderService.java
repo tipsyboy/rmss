@@ -26,7 +26,7 @@ public class OrderService {
     public Long order (Long memberId, Long shopId) {
         // 필요: 고객정보 / 쇼핑몰 정보 / 주문 내역서
         // TODO: OrderRequestDto 를 웹 계층으로부터 전달 받는다.
-        OrderRequestDto orderRequestDto = new OrderRequestDto(1L, 1L, 10000, 2);
+        OrderRequestDto orderRequestDto = new OrderRequestDto(1L, "userA", 10000, 2);
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. member_id=" + memberId));

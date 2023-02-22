@@ -57,9 +57,10 @@ public class Order {
     public static Order of(Member member, Shop shop, OrderItem... orderItems) {
         Order order = new Order();
 
-        // 연관관계 메서드
+        // 연관관계 메서드 - 생성자에 포함...?
         order.setMember(member);
         order.setShop(shop);
+
         for (OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
         }

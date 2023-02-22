@@ -4,6 +4,7 @@ import com.mysite.rmss.config.auth.CurrentMember;
 import com.mysite.rmss.controller.validator.ShopOpenFormValidator;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.item.ItemResponseDto;
+import com.mysite.rmss.dto.order.OrderRequestDto;
 import com.mysite.rmss.dto.shop.ShopInfoResponseDto;
 import com.mysite.rmss.dto.shop.ShopOpenForm;
 import com.mysite.rmss.service.item.ItemService;
@@ -77,6 +78,7 @@ public class ShopController {
     @GetMapping("/{shopPath}/items/{itemId}")
     public String viewShopItemDetail(@PathVariable String shopPath,
                                      @PathVariable Long itemId,
+                                     @ModelAttribute OrderRequestDto orderRequestDto,
                                      Model model) {
 
         ItemResponseDto itemResponseDto = itemService.findById(itemId);

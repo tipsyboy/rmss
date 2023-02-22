@@ -7,13 +7,14 @@
                 <div class="small mb-1" th:text="@{|pdt${itemResponseDto.id}|}">ID</div>
                 <h1 class="display-5 fw-bolder" th:text="${itemResponseDto.itemName}">상품명</h1>
                 <div class="fs-5 mb-5">
-                    <span th:text="@{|${itemResponseDto.priceWon} 원|}">가격</span>
+                    <span th:text="@{|₩ ${itemResponseDto.priceWon}|}">가격</span>
                 </div>
                 <p class="lead" th:text="${itemResponseDto.description}">제품 설명 긴글</p>
 
-                <form class="d-flex" th:object=${OrderRequestDto} th:action="@{|/order/orderSheet|}">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="number" value="1" style="max-width: 3rem" />
-                    <!--히든으로 정보들 넣어?-->
+                <form class="d-flex" th:object=${orderRequestDto} th:action="@{|/order/orderSheet|}">
+                    <input class="form-control text-center me-3" id="quantity" name="quantity" type="number" value="1" style="max-width: 3rem"/>
+                    <input type="hidden" name="itemId" th:value="${itemResponseDto.id}" />
+                    <input type="hidden" sec:authorize="isAuthenticated()" name="memberName" th:value="${#authentication.name}" />
                     <button class="btn btn-outline-dark flex-shrink-0" type="submit" >
                         <i class="bi-cart-fill me-1"></i>
                         주문
