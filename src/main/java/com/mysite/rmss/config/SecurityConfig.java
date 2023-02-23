@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -36,7 +35,6 @@ public class SecurityConfig {
         httpSecurity
                     .formLogin()
                     .loginPage("/members/login")
-//                    .successHandler(new SavedRequestAwareAuthenticationSuccessHandler())
                     .defaultSuccessUrl("/")
                 .and()
                     .logout()
