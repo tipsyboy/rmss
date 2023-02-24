@@ -6,14 +6,12 @@ import lombok.Getter;
 public class OrderRequestDto {
 
     private Long itemId;
-    private String memberName;
-    private Integer price;
+    private String memberName; // member 로그인 아이디
     private Integer quantity;
 
-    public OrderRequestDto(Long itemId, String memberName, Integer price, Integer quantity) {
+    public OrderRequestDto(Long itemId, String memberName, Integer quantity) {
         this.itemId = itemId;
         this.memberName = memberName;
-        this.price = price;
         this.quantity = quantity;
     }
 }

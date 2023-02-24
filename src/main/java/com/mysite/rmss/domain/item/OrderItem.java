@@ -31,7 +31,7 @@ public class OrderItem {
     public static OrderItem of(Item item, OrderRequestDto requestDto) {
         OrderItem orderItem = new OrderItem();
         orderItem.item = item;
-        orderItem.orderPrice = requestDto.getPrice();
+        orderItem.orderPrice = item.getPrice();
         orderItem.count = requestDto.getQuantity();
 
         return orderItem;
