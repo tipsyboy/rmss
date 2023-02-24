@@ -12,7 +12,7 @@
                 <p class="lead" th:text="${itemResponseDto.description}">제품 설명 긴글</p>
 
                 <form class="d-flex" th:object=${orderRequestDto} th:action="@{|/order/orderSheet|}">
-                    <input class="form-control text-center me-3" id="quantity" name="quantity" type="number" value="1" style="max-width: 3rem"/>
+                    <input class="form-control text-center me-3" id="quantity" name="quantity" type="number" min="1" value="1" style="max-width: 5rem" required/>
                     <input type="hidden" name="itemId" th:value="${itemResponseDto.id}" />
                     <input type="hidden" sec:authorize="isAuthenticated()" name="memberName" th:value="${#authentication.name}" />
                     <button class="btn btn-outline-dark flex-shrink-0" type="submit" >
