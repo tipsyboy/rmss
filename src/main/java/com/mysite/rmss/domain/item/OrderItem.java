@@ -1,5 +1,6 @@
 package com.mysite.rmss.domain.item;
 
+import com.mysite.rmss.domain.cart.Cart;
 import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.dto.order.OrderRequestDto;
@@ -22,6 +23,10 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
     private int orderPrice;
 

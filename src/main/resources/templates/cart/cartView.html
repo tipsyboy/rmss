@@ -1,0 +1,32 @@
+<html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
+<section class="container px-4 px-lg-5 mt-5 my-5">
+    <h1 class="border-bottom pb-2 mb-2">장바구니</h1>
+
+    <div class="tab-content" id="pills-tabContent">
+        <table class="table">
+            <thead class="table-dark">
+            <tr class="text-center">
+                <th>상품명</th>
+                <th>쇼핑몰</th>
+                <th>정가</th>
+                <th>수량</th>
+                <th>합계</th>
+            </tr>
+            </thead>
+
+<!--            <tbody>-->
+<!--            <tr class="text-center" th:each="orderItem : ${orderItems}">-->
+
+<!--                <td th:text="${orderItem.itemName}"></td>-->
+<!--                <td th:text="${}"></td>-->
+<!--                <td th:text="${item.price}"></td>-->
+<!--                <td th:text="${item.stock}"></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+        </table>
+        <div>
+            <a class="btn btn-outline-primary" href="#" th:href="@{|#|}">주문하기</a>
+        </div>
+    </div>
+</section>
+</html>

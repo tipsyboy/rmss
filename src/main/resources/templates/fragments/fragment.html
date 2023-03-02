@@ -34,6 +34,10 @@
                     <a class="nav-link text-light" sec:authorize="isAuthenticated()"
                        th:href="@{|/profile/${#authentication.name}|}" aria-current="page" th:text="${#authentication.name}">프로필</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" sec:authorize="isAuthenticated()"
+                       th:href="@{|/cart/${#authentication.name}|}" aria-current="page">장바구니</a>
+                </li>
                 <li>
                     <a class="nav-link text-light" sec:authorize="isAuthenticated()" th:href="@{/members/logout}" aria-current="page">로그아웃</a>
                 </li>

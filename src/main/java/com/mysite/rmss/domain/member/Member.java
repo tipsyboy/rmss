@@ -1,5 +1,6 @@
 package com.mysite.rmss.domain.member;
 
+import com.mysite.rmss.domain.cart.Cart;
 import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.shop.Shop;
 import lombok.Builder;
@@ -34,6 +35,9 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Order> orderList = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Cart cart;
+
     // TODO: Embedded 타입으로 이후에 Address 를 추가할 것
 
 
@@ -45,6 +49,7 @@ public class Member {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.cart = Cart.from(this);
     }
 
     // ===== ===== //
