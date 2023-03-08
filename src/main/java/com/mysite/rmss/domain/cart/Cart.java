@@ -19,6 +19,9 @@ public class Cart {
     @OneToOne(mappedBy = "cart")
     private Member member;
 
+    @OneToMany(mappedBy = "cart")
+    private List<OrderItem> cartItems = new ArrayList<>();
+
     protected Cart() {}
 
     public static Cart from(Member member) {

@@ -12,6 +12,7 @@ public class CartController {
     @GetMapping("/pCart/{memberName}")
     public String viewCart(@PathVariable("memberName") String memberName) {
 
+
         // TODO: 권한 없으면 접근 불가
         return "cart/cartView";
     }

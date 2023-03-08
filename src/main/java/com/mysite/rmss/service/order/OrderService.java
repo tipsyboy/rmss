@@ -5,6 +5,7 @@ import com.mysite.rmss.domain.item.OrderItem;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.shop.Shop;
+import com.mysite.rmss.dto.cart.AddItemToCartRequestDto;
 import com.mysite.rmss.dto.order.OrderRequestDto;
 import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
@@ -49,5 +50,20 @@ public class OrderService {
         orderRepository.save(order);
 
         return order.getId();
+    }
+
+    @Transactional
+    public void addItemToCart(AddItemToCartRequestDto addItemToCartRequestDto) {
+
+        Member member = memberRepository.findByName(addItemToCartRequestDto.getMemberName())
+                .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 유저가 없습니다. username=" + addItemToCartRequestDto.getMemberName()));
+
+        Item item = itemRepository.findById(addItemToCartRequestDto.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. itemId=" + addItemToCartRequestDto.getItemId()));
+
+        Shop shop = item.getShop();
+
+        OrderItem orderItem = OrderItem.ofByCartDto(item, addItemToCartRequestDto);
+        member.getCart().getCartItems().add(orderItem); // 추가
     }
 }

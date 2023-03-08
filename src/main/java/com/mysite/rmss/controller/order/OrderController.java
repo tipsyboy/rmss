@@ -52,6 +52,12 @@ public class OrderController {
 //            // TODO: 이전페이지로 돌아가야하는데..
 //        }
 
+        log.info("itemId={}", addItemToCartRequestDto.getItemId());
+        log.info("userName={}", addItemToCartRequestDto.getMemberName());
+        log.info("quantity={}", addItemToCartRequestDto.getQuantity());
+
+        orderService.addItemToCart(addItemToCartRequestDto);
+
         // RedirectAttributes - addAttribute / addFlashAttribute
         redirectAttributes.addAttribute("memberName", member.getUsername());
         return "redirect:/pCart/{memberName}"; // 일단 장바구니로 리다이렉트
