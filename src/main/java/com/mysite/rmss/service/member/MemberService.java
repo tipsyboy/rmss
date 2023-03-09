@@ -19,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MemberService {
 
-    public final MemberRepository memberRepository;
-    public final PasswordEncoder passwordEncoder;
-    public final MemberSecurityService memberSecurityService;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final MemberSecurityService memberSecurityService;
 
     @Transactional
     public void signup(MemberSaveForm form) {

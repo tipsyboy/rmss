@@ -52,10 +52,6 @@ public class OrderController {
 //            // TODO: 이전페이지로 돌아가야하는데..
 //        }
 
-        log.info("itemId={}", addItemToCartRequestDto.getItemId());
-        log.info("userName={}", addItemToCartRequestDto.getMemberName());
-        log.info("quantity={}", addItemToCartRequestDto.getQuantity());
-
         orderService.addItemToCart(addItemToCartRequestDto);
 
         // RedirectAttributes - addAttribute / addFlashAttribute

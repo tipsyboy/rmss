@@ -1,5 +1,6 @@
 package com.mysite.rmss.service.order;
 
+import com.mysite.rmss.domain.cart.Cart;
 import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.item.OrderItem;
 import com.mysite.rmss.domain.member.Member;
@@ -12,9 +13,11 @@ import com.mysite.rmss.repository.member.MemberRepository;
 import com.mysite.rmss.repository.order.OrderRepository;
 import com.mysite.rmss.repository.shop.ShopRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -64,6 +67,7 @@ public class OrderService {
         Shop shop = item.getShop();
 
         OrderItem orderItem = OrderItem.ofByCartDto(item, addItemToCartRequestDto);
-        member.getCart().getCartItems().add(orderItem); // 추가
+        member.getCart().addItem(orderItem);
+
     }
 }

@@ -14,15 +14,16 @@
             </tr>
             </thead>
 
-<!--            <tbody>-->
-<!--            <tr class="text-center" th:each="orderItem : ${orderItems}">-->
+            <tbody>
+            <tr class="text-center" th:each="cartItemInfo : ${cartItemInfoResponseDtos}">
 
-<!--                <td th:text="${orderItem.itemName}"></td>-->
-<!--                <td th:text="${}"></td>-->
-<!--                <td th:text="${item.price}"></td>-->
-<!--                <td th:text="${item.stock}"></td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
+                <td th:text="${cartItemInfo.itemName}"></td>
+                <td th:text="${cartItemInfo.shopName}"></td>
+                <td th:text="${cartItemInfo.price}"></td>
+                <td th:text="${cartItemInfo.quantity}"></td>
+                <td th:text="${cartItemInfo.itemSumPrice}"></td>
+            </tr>
+            </tbody>
         </table>
         <div>
             <a class="btn btn-outline-primary" href="#" th:href="@{|#|}">주문하기</a>
