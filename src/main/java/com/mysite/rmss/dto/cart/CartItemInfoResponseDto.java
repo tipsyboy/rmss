@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class CartItemInfoResponseDto {
 
+    private Long orderItemId;
     private String itemName;
     private String shopName;
     private Integer price;
@@ -13,6 +14,7 @@ public class CartItemInfoResponseDto {
     private Integer itemSumPrice;
 
     public CartItemInfoResponseDto(OrderItem entity) {
+        this.orderItemId = entity.getId();
         this.itemName = entity.getItem().getItemName();
         this.shopName = entity.getItem().getShop().getShopTitle();
         this.price = entity.getOrderPrice();

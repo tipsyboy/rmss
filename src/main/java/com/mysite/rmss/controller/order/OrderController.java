@@ -22,20 +22,6 @@ public class OrderController {
 
     private final OrderService orderService;
 
-//    @GetMapping("/order/orderSheet")
-//    public String viewOrderSheet(@ModelAttribute OrderRequestDto orderRequestDto,
-//                                 @CurrentMember Member member,
-//                                 Model model) {
-//        if (member == null) {
-//            return "redirect:/members/login";
-//            // TODO: 이 로그인 이후에 상품 페이지로 다시 돌아가게 하고 싶은데, 어떻게 할까
-//        }
-//
-//        ItemResponseDto itemResponseDto = itemService.findById(orderRequestDto.getItemId());
-//        model.addAttribute("items", itemResponseDto);
-//
-//        return "orders/orderSheet";
-//    }
 
     @PostMapping("/cart/add")
     public String addItemToCartRequest(@Valid @ModelAttribute AddItemToCartRequestDto addItemToCartRequestDto,

@@ -11,17 +11,18 @@
                 <th>정가</th>
                 <th>수량</th>
                 <th>합계</th>
+                <th></th>
             </tr>
             </thead>
 
             <tbody>
             <tr class="text-center" th:each="cartItemInfo : ${cartItemInfoResponseDtos}">
-
                 <td th:text="${cartItemInfo.itemName}"></td>
                 <td th:text="${cartItemInfo.shopName}"></td>
                 <td th:text="${cartItemInfo.price}"></td>
                 <td th:text="${cartItemInfo.quantity}"></td>
                 <td th:text="${cartItemInfo.itemSumPrice}"></td>
+                <td><a th:href="@{|/pCart/delete/${cartItemInfo.orderItemId}|}" class="btn btn-danger">삭제</a></td>
             </tr>
             </tbody>
         </table>

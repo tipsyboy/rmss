@@ -64,10 +64,7 @@ public class OrderService {
         Item item = itemRepository.findById(addItemToCartRequestDto.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. itemId=" + addItemToCartRequestDto.getItemId()));
 
-        Shop shop = item.getShop();
-
         OrderItem orderItem = OrderItem.ofByCartDto(item, addItemToCartRequestDto);
         member.getCart().addItem(orderItem);
-
     }
 }
