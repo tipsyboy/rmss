@@ -38,6 +38,11 @@ public class ShopRepository {
                 .stream().findAny();
     }
 
+    public List<Shop> findAllShop() {
+        return em.createQuery("select s from Shop s", Shop.class)
+                .getResultList();
+    }
+
     public boolean existsByShopTitle(String shopTitle) {
         List<Long> result = em.createQuery("select s.id from Shop s where s.shopTitle = :shopTitle", Long.class)
                 .setParameter("shopTitle", shopTitle)

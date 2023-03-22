@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -36,4 +39,11 @@ public class ShopService {
         return new ShopInfoResponseDto(findShop);
     }
 
+    public List<ShopInfoResponseDto> findAllShopList() {
+        // TODO: paging 처리
+
+        return shopRepository.findAllShop()
+                .stream().map(Shop -> new ShopInfoResponseDto(Shop))
+                .collect(Collectors.toList());
+    }
 }
