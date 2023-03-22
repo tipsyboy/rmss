@@ -6,8 +6,10 @@ import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.member.MemberInfoResponseDto;
 import com.mysite.rmss.dto.member.MemberPasswordEditForm;
 import com.mysite.rmss.dto.member.MemberProfileEditForm;
+import com.mysite.rmss.dto.shop.ShopInfoResponseDto;
 import com.mysite.rmss.service.member.MemberSecurityService;
 import com.mysite.rmss.service.member.MemberService;
+import com.mysite.rmss.service.shop.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +37,7 @@ public class ProfileController {
     private final PasswordEncoder passwordEncoder;
     private final PasswordEditFormValidator passwordEditFormValidator;
     private final MemberSecurityService memberSecurityService;
-    private final AuthenticationManager authenticationManager;
+    private final ShopService shopService;
 
     @InitBinder("passwordEditForm")
     public void init(WebDataBinder dataBinder) {
@@ -48,15 +50,19 @@ public class ProfileController {
                           @CurrentMember Member currentMember,
                           Model model) {
 
-        MemberInfoResponseDto findMemberDto = memberService.memberInfoFindByUsername(username);
+        MemberInfoResponseDto findMemberDto = memberService.findMemberInfoByUsername(username);
 
         boolean isMyPage = currentMember != null && currentMember.getUsername().equals(findMemberDto.getUsername());
+        boolean existsShop = false;
+        ShopInfoResponseDto shopInfoByUsername = shopService.getShopInfoByUsername(findMemberDto.getUsername());
+        if (shopInfoByUsername != null) {
+            existsShop = true;
+        }
+
+        model.addAttribute("existsShop", existsShop);
+        model.addAttribute("shopInfo", shopInfoByUsername);
         model.addAttribute("member", findMemberDto);
         model.addAttribute("isMyPage", isMyPage);
-
-        // TODO: url 매개변수로 받은 member id가 존재하는지 확인
-        // TODO: 현재 로그인된 사용자가 있다면 profile 의 주인인지 확인한다.
-        // TODO: Dto 변환 후 모델로 앞단에 전달한다
 
         return "members/profile";
     }
@@ -127,7 +133,7 @@ public class ProfileController {
     }
 
     private void renewAuthenticationAfterPasswordEdit(Member currentMember,
-                                     MemberPasswordEditForm passwordEditForm) {
+                                                      MemberPasswordEditForm passwordEditForm) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails newPrincipal = memberSecurityService.loadUserByUsername(currentMember.getUsername());
         UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(newPrincipal, passwordEditForm.getNewPassword1(), newPrincipal.getAuthorities());

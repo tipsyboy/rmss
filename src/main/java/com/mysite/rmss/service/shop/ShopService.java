@@ -39,6 +39,16 @@ public class ShopService {
         return new ShopInfoResponseDto(findShop);
     }
 
+    public ShopInfoResponseDto getShopInfoByUsername(String username) {
+        Member member = memberRepository.findByName(username)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. username=" + username));
+
+        if (member.getShop() == null) {
+            return null;
+        }
+        return new ShopInfoResponseDto(member.getShop());
+    }
+
     public List<ShopInfoResponseDto> findAllShopList() {
         // TODO: paging 처리
 

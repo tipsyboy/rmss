@@ -1,16 +1,22 @@
 <html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
 <section class="container px-4 px-lg-5 mt-5 my-5">
     <h1 class="border-bottom pb-2 mb-2" th:text="${member.username}">Member ID</h1>
+    <!-- 레이블 버튼 -->
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <!-- 프로필 탭 레이블 -->
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
                     type="button" role="tab" aria-controls="pills-profile" aria-selected="true">프로필</button>
         </li>
-        <li class="nav-item" role="presentation">
+        <!-- 쇼핑몰 탭 레이블 -->
+        <li th:if="${isMyPage}" class="nav-item" role="presentation">
             <button class="nav-link" id="pills-shop-tab" data-bs-toggle="pill" data-bs-target="#pills-shop"
                     type="button" role="tab" aria-controls="pills-shop" aria-selected="false">쇼핑몰</button>
         </li>
     </ul>
+
+    <!-- 기능 탭 -->
+    <!-- 프로필 탭 -->
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
             <div class="mb-4">TODO: 프로필 이미지 넣기</div>
@@ -24,8 +30,17 @@
                 <a class="btn btn-outline-primary" href="#" th:href="@{/profile/settings}">프로필 수정</a>
             </div>
         </div>
+        <!-- 쇼핑몰 탭 -->
         <div class="tab-pane fade" id="pills-shop" role="tabpanel" aria-labelledby="pills-shop-tab">
-            shop info
+            <div th:if="${isMyPage} and ${!existsShop}">
+                <a class="btn btn-outline-primary" th:href="@{/shop/open}">쇼핑몰 개설하기</a>
+            </div>
+            <div th:if="${isMyPage} and ${existsShop}">
+                <a class="btn btn-outline-primary" th:href="@{|/${shopInfo.url}|}">내 쇼핑몰 가기</a>
+            </div>
+            <div th:if="${isMyPage} and ${existsShop}">
+                <a class="btn btn-outline-primary" th:href="@{|/${shopInfo.url}/settings|}">쇼핑몰 관리</a>
+            </div>
         </div>
     </div>
 </section>

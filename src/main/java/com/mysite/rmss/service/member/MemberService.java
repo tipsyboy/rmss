@@ -35,7 +35,7 @@ public class MemberService {
      * find Member Entity @param username
      * @return convert Entity to MemberInfoResponseDto
      */
-    public MemberInfoResponseDto memberInfoFindByUsername(String username) {
+    public MemberInfoResponseDto findMemberInfoByUsername(String username) {
         Member findMember = memberRepository.findByName(username)
                 .orElseThrow(() -> new IllegalArgumentException(username + " 사용자를 찾을 수 없습니다."));
 
