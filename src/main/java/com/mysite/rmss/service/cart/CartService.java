@@ -33,9 +33,13 @@ public class CartService {
         Member member = memberRepository.findByName(memberName)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다 name=" + memberName));
 
-        return member.getCart().getCartItems()
+        return cartItemRepository.findAllCartItemsByMemberCartId(member.getCart().getId())
                 .stream().map(CartItem -> new CartItemInfoResponseDto(CartItem))
                 .collect(Collectors.toList());
+
+//        return member.getCart().getCartItems()
+//                .stream().map(CartItem -> new CartItemInfoResponseDto(CartItem))
+//                .collect(Collectors.toList());
     }
 
     @Transactional
