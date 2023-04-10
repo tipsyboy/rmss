@@ -1,8 +1,6 @@
 package com.mysite.rmss.domain.item;
 
-import com.mysite.rmss.domain.cart.Cart;
 import com.mysite.rmss.domain.order.Order;
-import com.mysite.rmss.dto.cart.AddItemToCartRequestDto;
 import com.mysite.rmss.dto.order.OrderRequestDto;
 import lombok.Getter;
 
@@ -24,10 +22,6 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
-
     private int orderPrice;
 
     private int count; // 수량
@@ -42,20 +36,8 @@ public class OrderItem {
         return orderItem;
     }
 
-    public static OrderItem ofByCartDto(Item item, AddItemToCartRequestDto requestDto) {
-        OrderItem orderItem = new OrderItem();
-        orderItem.item = item;
-        orderItem.orderPrice = item.getPrice();
-        orderItem.count = requestDto.getQuantity();
-
-        return orderItem;
-    }
-
     public void setOrder(Order order) {
         this.order = order;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
 }

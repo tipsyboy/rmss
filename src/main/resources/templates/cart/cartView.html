@@ -1,34 +1,39 @@
 <html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
 <section class="container px-4 px-lg-5 mt-5 my-5">
     <h1 class="border-bottom pb-2 mb-2">장바구니</h1>
-
     <div class="tab-content" id="pills-tabContent">
-        <table class="table">
-            <thead class="table-dark">
-            <tr class="text-center">
-                <th>상품명</th>
-                <th>쇼핑몰</th>
-                <th>정가</th>
-                <th>수량</th>
-                <th>합계</th>
-                <th></th>
-            </tr>
-            </thead>
+        <form class="tab-content" th:action="@{/order/ordersheet}" th:object="${orderSheetInfoDto}" method="post">
+            <table class="table">
+                <thead class="table-dark">
+                <tr class="text-center">
+                    <th></th>
+                    <th>상품명</th>
+                    <th>쇼핑몰</th>
+                    <th>정가</th>
+                    <th>수량</th>
+                    <th>합계</th>
+                    <th></th>
+                </tr>
+                </thead>
 
-            <tbody>
-            <tr class="text-center" th:each="cartItemInfo : ${cartItemInfoResponseDtos}">
-                <td th:text="${cartItemInfo.itemName}"></td>
-                <td th:text="${cartItemInfo.shopName}"></td>
-                <td th:text="${cartItemInfo.price}"></td>
-                <td th:text="${cartItemInfo.quantity}"></td>
-                <td th:text="${cartItemInfo.itemSumPrice}"></td>
-                <td><a th:href="@{|/pCart/delete/${cartItemInfo.orderItemId}|}" class="btn btn-danger">삭제</a></td>
-            </tr>
-            </tbody>
-        </table>
-        <div>
-            <a class="btn btn-outline-primary" href="#" th:href="@{|#|}">주문하기</a>
-        </div>
+                <tbody>
+                <tr class="text-center" th:each="cartItemInfo : ${cartItemInfoResponseDtos}">
+                    <td>
+                        <input type="checkbox" class="form-check-input" name="idList" th:value="${cartItemInfo.cartItemId}" />
+                    </td>
+                    <td th:text="${cartItemInfo.itemName}"></td>
+                    <td th:text="${cartItemInfo.shopName}"></td>
+                    <td th:text="${cartItemInfo.price}"></td>
+                    <td th:text="${cartItemInfo.quantity}"></td>
+                    <td th:text="${cartItemInfo.itemSumPrice}"></td>
+                    <td><a th:href="@{|/pCart/delete/${cartItemInfo.cartItemId}|}" class="btn btn-danger">삭제</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <button class="btn btn-primary btn-block" type="submit">주문하기</button>
+            </div>
+        </form>
     </div>
 </section>
 </html>

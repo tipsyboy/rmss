@@ -1,6 +1,5 @@
 package com.mysite.rmss.service.order;
 
-import com.mysite.rmss.domain.cart.Cart;
 import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.item.OrderItem;
 import com.mysite.rmss.domain.member.Member;
@@ -11,7 +10,6 @@ import com.mysite.rmss.dto.order.OrderRequestDto;
 import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
 import com.mysite.rmss.repository.order.OrderRepository;
-import com.mysite.rmss.repository.shop.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,7 +23,6 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
-    private final ShopRepository shopRepository;
     private final ItemRepository itemRepository;
 
     @Transactional
@@ -53,18 +50,5 @@ public class OrderService {
         orderRepository.save(order);
 
         return order.getId();
-    }
-
-    @Transactional
-    public void addItemToCart(AddItemToCartRequestDto addItemToCartRequestDto) {
-
-        Member member = memberRepository.findByName(addItemToCartRequestDto.getMemberName())
-                .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 유저가 없습니다. username=" + addItemToCartRequestDto.getMemberName()));
-
-        Item item = itemRepository.findById(addItemToCartRequestDto.getItemId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. itemId=" + addItemToCartRequestDto.getItemId()));
-
-        OrderItem orderItem = OrderItem.ofByCartDto(item, addItemToCartRequestDto);
-        member.getCart().addItem(orderItem);
     }
 }

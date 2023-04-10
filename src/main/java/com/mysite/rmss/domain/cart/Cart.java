@@ -20,7 +20,7 @@ public class Cart {
     private Member member;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<OrderItem> cartItems = new ArrayList<>();
+    private List<CartItem> cartItems = new ArrayList<>();
 
     protected Cart() {}
 
@@ -30,8 +30,8 @@ public class Cart {
         return cart;
     }
 
-    public void addItem(OrderItem orderItem) {
-        this.cartItems.add(orderItem);
-        orderItem.setCart(this);
+    public void addItem(CartItem cartItem) {
+        this.cartItems.add(cartItem);
+        cartItem.setCart(this);
     }
 }

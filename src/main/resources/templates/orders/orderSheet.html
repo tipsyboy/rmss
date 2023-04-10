@@ -1,6 +1,6 @@
 <html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
 <section class="container px-4 px-lg-5 mt-5 my-5">
-    <h1 class="border-bottom pb-2 mb-2">상품 주문</h1>
+    <h1 class="border-bottom pb-2 mb-2">주문하기</h1>
 
     <div class="tab-content" id="pills-tabContent">
         <table class="table">
@@ -18,9 +18,10 @@
             <tr class="text-center" th:each="orderItem : ${orderItems}">
 
                 <td th:text="${orderItem.itemName}"></td>
-                <td th:text="${}"></td>
-                <td th:text="${item.price}"></td>
-                <td th:text="${item.stock}"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
             </tbody>
         </table>

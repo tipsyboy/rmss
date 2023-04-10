@@ -1,8 +1,14 @@
 package com.mysite.rmss.service.cart;
 
+import com.mysite.rmss.domain.cart.Cart;
+import com.mysite.rmss.domain.cart.CartItem;
+import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.item.OrderItem;
 import com.mysite.rmss.domain.member.Member;
+import com.mysite.rmss.dto.cart.AddItemToCartRequestDto;
 import com.mysite.rmss.dto.cart.CartItemInfoResponseDto;
+import com.mysite.rmss.repository.cart.CartItemRepository;
+import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
 import com.mysite.rmss.repository.orderItem.OrderItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,19 +26,33 @@ import java.util.stream.Collectors;
 public class CartService {
 
     private final MemberRepository memberRepository;
-    private final OrderItemRepository orderItemRepository;
+    private final CartItemRepository cartItemRepository;
+    private final ItemRepository itemRepository;
 
     public List<CartItemInfoResponseDto> viewCartByMemberName(String memberName) {
         Member member = memberRepository.findByName(memberName)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다 name=" + memberName));
 
         return member.getCart().getCartItems()
-                .stream().map(OrderItem -> new CartItemInfoResponseDto(OrderItem))
+                .stream().map(CartItem -> new CartItemInfoResponseDto(CartItem))
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public void deleteCartItem(String memberName, Long orderItemId) {
-        orderItemRepository.delete(orderItemId);
+    public void addItemToCart(AddItemToCartRequestDto addItemToCartRequestDto) {
+
+        Member member = memberRepository.findByName(addItemToCartRequestDto.getMemberName())
+                .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 유저가 없습니다. username=" + addItemToCartRequestDto.getMemberName()));
+
+        Item item = itemRepository.findById(addItemToCartRequestDto.getItemId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. itemId=" + addItemToCartRequestDto.getItemId()));
+
+        CartItem orderItem = CartItem.ofByCartDto(item, addItemToCartRequestDto);
+        member.getCart().addItem(orderItem);
+    }
+
+    @Transactional
+    public void deleteCartItem(String memberName, Long cartItemId) {
+        cartItemRepository.delete(cartItemId);
     }
 }
