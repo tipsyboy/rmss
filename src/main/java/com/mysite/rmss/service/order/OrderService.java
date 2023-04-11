@@ -1,11 +1,10 @@
 package com.mysite.rmss.service.order;
 
 import com.mysite.rmss.domain.item.Item;
-import com.mysite.rmss.domain.item.OrderItem;
+import com.mysite.rmss.domain.order.OrderItem;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.shop.Shop;
-import com.mysite.rmss.dto.cart.AddItemToCartRequestDto;
 import com.mysite.rmss.dto.order.OrderRequestDto;
 import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;

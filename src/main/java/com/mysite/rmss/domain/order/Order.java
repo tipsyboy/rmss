@@ -1,6 +1,5 @@
 package com.mysite.rmss.domain.order;
 
-import com.mysite.rmss.domain.item.OrderItem;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.shop.Shop;
 import lombok.Getter;

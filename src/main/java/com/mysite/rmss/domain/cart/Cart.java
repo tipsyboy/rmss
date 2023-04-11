@@ -1,6 +1,5 @@
 package com.mysite.rmss.domain.cart;
 
-import com.mysite.rmss.domain.item.OrderItem;
 import com.mysite.rmss.domain.member.Member;
 import lombok.Getter;
 

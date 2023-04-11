@@ -1,16 +1,13 @@
 package com.mysite.rmss.service.cart;
 
-import com.mysite.rmss.domain.cart.Cart;
 import com.mysite.rmss.domain.cart.CartItem;
 import com.mysite.rmss.domain.item.Item;
-import com.mysite.rmss.domain.item.OrderItem;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.cart.AddItemToCartRequestDto;
 import com.mysite.rmss.dto.cart.CartItemInfoResponseDto;
 import com.mysite.rmss.repository.cart.CartItemRepository;
 import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
-import com.mysite.rmss.repository.orderItem.OrderItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

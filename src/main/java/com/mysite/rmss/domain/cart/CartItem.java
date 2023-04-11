@@ -1,7 +1,6 @@
 package com.mysite.rmss.domain.cart;
 
 import com.mysite.rmss.domain.item.Item;
-import com.mysite.rmss.domain.item.OrderItem;
 import com.mysite.rmss.dto.cart.AddItemToCartRequestDto;
 import lombok.Getter;
 
