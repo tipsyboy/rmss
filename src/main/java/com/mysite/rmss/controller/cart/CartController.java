@@ -35,16 +35,6 @@ public class CartController {
         return "cart/cartView";
     }
 
-    @GetMapping("/pCart/delete/{cartItemId}")
-    public String deleteCartItem(@PathVariable("cartItemId") Long cartItemId,
-                                 @CurrentMember Member member,
-                                 RedirectAttributes redirectAttributes) {
-        cartService.deleteCartItem(member.getUsername(), cartItemId);
-
-        redirectAttributes.addAttribute("memberName", member.getUsername());
-        return "redirect:/pCart/{memberName}"; // 일단 장바구니로 리다이렉트
-    }
-
     // add item to cart
     @PostMapping("/cart/add")
     public String addItemToCartRequest(@Valid @ModelAttribute AddItemToCartRequestDto addItemToCartRequestDto,
@@ -64,6 +54,17 @@ public class CartController {
         cartService.addItemToCart(addItemToCartRequestDto);
 
         // RedirectAttributes - addAttribute / addFlashAttribute
+        redirectAttributes.addAttribute("memberName", member.getUsername());
+        return "redirect:/pCart/{memberName}"; // 일단 장바구니로 리다이렉트
+    }
+
+    // delete cart item
+    @GetMapping("/pCart/delete/{cartItemId}")
+    public String deleteCartItem(@PathVariable("cartItemId") Long cartItemId,
+                                 @CurrentMember Member member,
+                                 RedirectAttributes redirectAttributes) {
+        cartService.deleteCartItem(member.getUsername(), cartItemId);
+
         redirectAttributes.addAttribute("memberName", member.getUsername());
         return "redirect:/pCart/{memberName}"; // 일단 장바구니로 리다이렉트
     }

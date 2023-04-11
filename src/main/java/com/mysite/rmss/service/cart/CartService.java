@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -44,15 +45,19 @@ public class CartService {
 
     @Transactional
     public void addItemToCart(AddItemToCartRequestDto addItemToCartRequestDto) {
-
         Member member = memberRepository.findByName(addItemToCartRequestDto.getMemberName())
                 .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 유저가 없습니다. username=" + addItemToCartRequestDto.getMemberName()));
 
         Item item = itemRepository.findById(addItemToCartRequestDto.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. itemId=" + addItemToCartRequestDto.getItemId()));
 
-        CartItem orderItem = CartItem.ofByCartDto(item, addItemToCartRequestDto);
-        member.getCart().addItem(orderItem);
+        Optional<CartItem> cartItem = cartItemRepository.findByItemIdAndCartId(item.getId(), member.getCart().getId());
+        if (cartItem.isEmpty()) {
+            CartItem newCartItem = CartItem.ofByCartDto(item, addItemToCartRequestDto);
+            member.getCart().addItem(newCartItem);
+        } else {
+            cartItem.get().increaseCount(addItemToCartRequestDto.getQuantity());
+        }
     }
 
     @Transactional

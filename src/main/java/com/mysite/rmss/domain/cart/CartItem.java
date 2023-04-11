@@ -38,4 +38,8 @@ public class CartItem {
     public void setCart(Cart cart) {
         this.cart = cart;
     }
+
+    public void increaseCount(int q) {
+        this.count += q;
+    }
 }
