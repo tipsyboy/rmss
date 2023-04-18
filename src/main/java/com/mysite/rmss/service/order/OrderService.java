@@ -6,6 +6,7 @@ import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.order.OrderItem;
 import com.mysite.rmss.domain.shop.Shop;
 import com.mysite.rmss.dto.order.OrderSheetInfoDto;
+import com.mysite.rmss.dto.order.SalesOrderListDto;
 import com.mysite.rmss.repository.cart.CartItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
 import com.mysite.rmss.repository.order.OrderRepository;
@@ -49,6 +50,9 @@ public class OrderService {
         }
     }
 
+//    public List<SalesOrderListDto> salesOrderList() {
+//
+//    }
 
     private Map<String, List<OrderItem>> convertCartItemToOrderItemByShopTitle(OrderSheetInfoDto orderSheetInfoDto) {
         List<CartItem> selectedCartItems = cartItemRepository.findBySelectedIdList(orderSheetInfoDto.getIdList());
