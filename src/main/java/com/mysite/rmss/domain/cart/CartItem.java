@@ -22,12 +22,14 @@ public class CartItem {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
+    private String shopTitle;
     private int price;
     private int count;
 
     public static CartItem ofByCartDto(Item item, AddItemToCartRequestDto requestDto) {
         CartItem cartItem = new CartItem();
         cartItem.item = item;
+        cartItem.shopTitle = item.getShop().getShopTitle();
         cartItem.price = item.getPrice();
         cartItem.count = requestDto.getQuantity();
 
@@ -39,6 +41,7 @@ public class CartItem {
     }
 
     public void increaseCount(int q) {
+        // 이미 장바구니에 포함된 상품의 경우 count 증가
         this.count += q;
     }
 }

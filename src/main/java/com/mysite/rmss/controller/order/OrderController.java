@@ -1,6 +1,9 @@
 package com.mysite.rmss.controller.order;
 
+import com.mysite.rmss.config.auth.CurrentMember;
+import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.order.OrderSheetInfoDto;
+import com.mysite.rmss.service.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,17 +17,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class OrderController {
 
-    // order sheet
-//    @GetMapping("/orders/ordersheet")
-//    public String viewOrderSheet() {
-//    }
+    private final OrderService orderService;
 
     @PostMapping("/orders/order")
-    public String order(@ModelAttribute OrderSheetInfoDto orderSheetInfoDto) {
-        for (Long n : orderSheetInfoDto.getIdList()) {
-            log.info("cartItemNo: {}", n );
+    public String order(@ModelAttribute OrderSheetInfoDto orderSheetInfoDto,
+                        @CurrentMember Member currentMember) {
+
+        if (currentMember == null) {
+            return "redirect:/";
         }
 
+        orderService.orderByCart(orderSheetInfoDto, currentMember.getUsername());
+        // TODO: redirect 대신에 주문 완료 페이지로?
         return "redirect:/";
     }
 }

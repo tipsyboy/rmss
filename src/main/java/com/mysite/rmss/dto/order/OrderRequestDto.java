@@ -2,7 +2,6 @@ package com.mysite.rmss.dto.order;
 
 import lombok.Getter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter

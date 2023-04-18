@@ -53,7 +53,7 @@ public class Order {
     }
 
     // ===== 생성 메서드 ===== //
-    public static Order of(Member member, Shop shop, OrderItem... orderItems) {
+    public static Order of(Member member, Shop shop, List<OrderItem> orderItems) {
         Order order = new Order();
 
         // 연관관계 메서드 - 생성자에 포함...?

@@ -1,5 +1,6 @@
 package com.mysite.rmss.domain.order;
 
+import com.mysite.rmss.domain.cart.CartItem;
 import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.dto.order.OrderRequestDto;
 import lombok.Getter;
@@ -35,6 +36,16 @@ public class OrderItem {
 
         return orderItem;
     }
+
+    public static OrderItem fromCartItem(CartItem cartItem) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.item = cartItem.getItem();
+        orderItem.orderPrice = cartItem.getPrice();
+        orderItem.count = cartItem.getCount();
+
+        return orderItem;
+    }
+
 
     public void setOrder(Order order) {
         this.order = order;

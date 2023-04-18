@@ -32,4 +32,10 @@ public class CartItemRepository {
                 .setParameter("cartId", cartId)
                 .getResultList();
     }
+
+    public List<CartItem> findBySelectedIdList(List<Long> cartItemIdList) {
+        return em.createQuery("select ci from CartItem ci where ci.id in :cartItemIdList", CartItem.class)
+                .setParameter("cartItemIdList", cartItemIdList)
+                .getResultList();
+    }
 }

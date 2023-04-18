@@ -1,18 +1,25 @@
 package com.mysite.rmss.service.order;
 
-import com.mysite.rmss.domain.item.Item;
-import com.mysite.rmss.domain.order.OrderItem;
+import com.mysite.rmss.domain.cart.CartItem;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.order.Order;
+import com.mysite.rmss.domain.order.OrderItem;
 import com.mysite.rmss.domain.shop.Shop;
-import com.mysite.rmss.dto.order.OrderRequestDto;
-import com.mysite.rmss.repository.item.ItemRepository;
+import com.mysite.rmss.dto.order.OrderSheetInfoDto;
+import com.mysite.rmss.repository.cart.CartItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
 import com.mysite.rmss.repository.order.OrderRepository;
+import com.mysite.rmss.repository.shop.ShopRepository;
+import com.mysite.rmss.service.shop.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -20,34 +27,41 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrderService {
 
-    private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
-    private final ItemRepository itemRepository;
+    private final CartItemRepository cartItemRepository;
+    private final ShopRepository shopRepository;
+    private final OrderRepository orderRepository;
 
     @Transactional
-    public Long order (OrderRequestDto orderRequestDto) {
-        // 필요: 고객정보 / 쇼핑몰 정보 / 주문 내역서
-        // TODO: OrderRequestDto 를 웹 계층으로부터 전달 받는다.
+    public void orderByCart(OrderSheetInfoDto orderSheetInfoDto,
+                            String memberName) {
+        Member member = memberRepository.findByName(memberName)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다 username=" + memberName));
 
-        Member member = memberRepository.findByName(orderRequestDto.getMemberName())
-                .orElseThrow(() -> new IllegalArgumentException("해당 아이디의 유저가 없습니다. username=" + orderRequestDto.getMemberName()));
+        Map<String, List<OrderItem>> categorizedOrderItemsByShop = convertCartItemToOrderItemByShopTitle(orderSheetInfoDto);
+        for (String shopTitle : categorizedOrderItemsByShop.keySet()) {
+            log.info("shopTitle={}", shopTitle);
+            Shop findShop = shopRepository.findByTitle(shopTitle)
+                    .orElseThrow(() -> new IllegalArgumentException("쇼핑몰을 찾을 수 없습니다. shopTitle=" + shopTitle));
 
-        Item item = itemRepository.findById(orderRequestDto.getItemId())
-                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 없습니다. itemId=" + orderRequestDto.getItemId()));
+            Order order = Order.of(member, findShop, categorizedOrderItemsByShop.get(shopTitle));
+            orderRepository.save(order);
+        }
+    }
 
-        Shop shop = item.getShop();
 
+    private Map<String, List<OrderItem>> convertCartItemToOrderItemByShopTitle(OrderSheetInfoDto orderSheetInfoDto) {
+        List<CartItem> selectedCartItems = cartItemRepository.findBySelectedIdList(orderSheetInfoDto.getIdList());
 
-        // TODO: 배송정보 생성 -> Delivery class 정의
+        Map<String, List<OrderItem>> orderItems = new HashMap<>();
+        for (CartItem cartItem : selectedCartItems) {
+            if (!orderItems.containsKey(cartItem.getShopTitle())) {
+                orderItems.put(cartItem.getShopTitle(), new ArrayList<>());
+            }
+            orderItems.get(cartItem.getShopTitle()).add(OrderItem.fromCartItem(cartItem));
+            cartItemRepository.delete(cartItem.getId()); // TODO: 개선 여지가 있는데..
+        }
 
-        // TODO: OrderItem 이 여러개인 경우로 바꾸기 - 장바구니 구현!
-        // TODO: orderItem 생성 시 위에서 찾은 item 에 종속된 itemPrice 를 그대로 사용하지만, 나중에 할인률 같은 것을 계산할 때, 변경이 필요함  
-        OrderItem orderItem = OrderItem.of(item, orderRequestDto); 
-        Order order = Order.of(member, shop, orderItem);
-
-        // TODO: repository 로 저장하면 끝
-        orderRepository.save(order);
-
-        return order.getId();
+        return orderItems;
     }
 }
