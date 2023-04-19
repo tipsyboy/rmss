@@ -5,6 +5,7 @@ import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.order.OrderItem;
 import com.mysite.rmss.domain.shop.Shop;
+import com.mysite.rmss.dto.order.MemberOrderListDto;
 import com.mysite.rmss.dto.order.OrderSheetInfoDto;
 import com.mysite.rmss.dto.order.SalesOrderListDto;
 import com.mysite.rmss.repository.cart.CartItemRepository;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -53,6 +55,15 @@ public class OrderService {
 //    public List<SalesOrderListDto> salesOrderList() {
 //
 //    }
+
+    public List<MemberOrderListDto> memberOrderList(String memberName) {
+        Member member = memberRepository.findByName(memberName)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+
+        return member.getOrderList().stream()
+                .map(Order -> new MemberOrderListDto(Order))
+                .collect(Collectors.toList());
+    }
 
     private Map<String, List<OrderItem>> convertCartItemToOrderItemByShopTitle(OrderSheetInfoDto orderSheetInfoDto) {
         List<CartItem> selectedCartItems = cartItemRepository.findBySelectedIdList(orderSheetInfoDto.getIdList());
