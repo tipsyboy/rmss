@@ -58,10 +58,19 @@ public class OrderService {
 
     public List<MemberOrderListDto> memberOrderList(String memberName) {
         Member member = memberRepository.findByName(memberName)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. memberName=" + memberName));
 
         return member.getOrderList().stream()
                 .map(Order -> new MemberOrderListDto(Order))
+                .collect(Collectors.toList());
+    }
+
+    public List<SalesOrderListDto> shopOrderList(String shopTitle) {
+        Shop shop = shopRepository.findByTitle(shopTitle)
+                .orElseThrow(() -> new IllegalArgumentException("쇼핑몰을 찾을 수 없습니다. shopTitle=" + shopTitle));
+
+        return shop.getOrderList().stream()
+                .map(Order -> new SalesOrderListDto(Order))
                 .collect(Collectors.toList());
     }
 
