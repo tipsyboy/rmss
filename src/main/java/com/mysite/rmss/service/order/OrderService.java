@@ -65,9 +65,9 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    public List<SalesOrderListDto> shopOrderList(String shopTitle) {
-        Shop shop = shopRepository.findByTitle(shopTitle)
-                .orElseThrow(() -> new IllegalArgumentException("쇼핑몰을 찾을 수 없습니다. shopTitle=" + shopTitle));
+    public List<SalesOrderListDto> shopOrderList(String url) {
+        Shop shop = shopRepository.findByUrl(url)
+                .orElseThrow(() -> new IllegalArgumentException("쇼핑몰을 찾을 수 없습니다. url=" + url));
 
         return shop.getOrderList().stream()
                 .map(Order -> new SalesOrderListDto(Order))

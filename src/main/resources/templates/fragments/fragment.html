@@ -68,10 +68,10 @@
 <!-- shop settings page navbar -->
 <ul th:fragment="shopSettingMenu (currentMenu)" class="nav nav-pills mb-3">
     <li class="nav-item">
-        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'itemSetting'} ? active" href="#" th:href="@{/profile/settings}">상품 관리</a>
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'itemSetting'} ? active" href="#" th:href="@{|/${shopPath}/settings|}">상품 관리</a>
     </li>
     <li class="nav-item">
-        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'category'} ? active" href="#" th:href="@{#}">카테고리 관리</a>
+        <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'orders'} ? active" href="#" th:href="@{|/${shopPath}/orders|}">주문 관리</a>
     </li>
     <li class="nav-item">
         <a class="list-group-item list-group-item-action" th:classappend="${currentMenu == 'setting'} ? active" href="#" th:href="@{#}">설정</a>

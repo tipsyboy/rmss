@@ -4,9 +4,11 @@ import com.mysite.rmss.config.auth.CurrentMember;
 import com.mysite.rmss.controller.validator.ShopOpenFormValidator;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.item.ItemResponseDto;
+import com.mysite.rmss.dto.order.SalesOrderListDto;
 import com.mysite.rmss.dto.shop.ShopInfoResponseDto;
 import com.mysite.rmss.dto.shop.ShopOpenForm;
 import com.mysite.rmss.service.item.ItemService;
+import com.mysite.rmss.service.order.OrderService;
 import com.mysite.rmss.service.shop.ShopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,7 @@ public class ShopController {
     private final ShopOpenFormValidator shopOpenFormValidator;
     private final ShopService shopService;
     private final ItemService itemService;
+    private final OrderService orderService;
 
     @InitBinder("shopOpenForm")
     public void openFormValidation(WebDataBinder dataBinder) {
@@ -88,7 +91,7 @@ public class ShopController {
     }
 
 
-    // shop 관리 페이지
+    // ===== shop 관리 페이지 ===== //
     @GetMapping("/{shopPath}/settings")
     public String viewShopSetting(@PathVariable String shopPath,
                                   Model model) {
@@ -99,5 +102,15 @@ public class ShopController {
 
         model.addAttribute("shopPath", shopPath);
         return "shop/shopSettings";
+    }
+    
+    // 판매 주문 리스트
+    @GetMapping("/{shopPath}/orders")
+    public String viewSalesOrderList(@PathVariable String shopPath,
+                                     Model model) {
+        // TODO: 관리자 권한
+
+        model.addAttribute("orders", orderService.shopOrderList(shopPath));
+        return "shop/shopSalesOrderList";
     }
 }
