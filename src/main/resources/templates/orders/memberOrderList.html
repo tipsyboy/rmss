@@ -1,0 +1,29 @@
+<html th:replace="~{/layouts/base :: layoutBase(~{::section})}">
+<section class="container px-4 px-lg-5 mt-5 my-5">
+    <h1 class="border-bottom pb-2 mb-2">주문조회</h1>
+    <div class="tab-content" id="pills-tabContent">
+        <table class="table">
+            <thead class="table-dark">
+            <tr class="text-center">
+                <th>주문 번호</th>
+                <th>쇼핑몰</th>
+                <th>대표 상품</th>
+                <th>가격</th>
+                <th>상태</th>
+                <th>주문 날짜</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center" th:each="order : ${memberOrderList}">
+                <td th:text="${order.orderId}"></td>
+                <td th:text="${order.shopTitle}"></td>
+                <td th:text="${order.orderItemResponseDtoList[0].itemName}"></td>
+                <td>가격 구현 토탈</td>
+                <td th:text="${order.orderStatus}"></td>
+                <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</html>

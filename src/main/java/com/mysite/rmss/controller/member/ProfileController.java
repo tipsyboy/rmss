@@ -102,7 +102,6 @@ public class ProfileController {
 
 
     // ===== password edit ===== //
-
     @GetMapping("/password/edit")
     public String passwordEditForm(@ModelAttribute("passwordEditForm") MemberPasswordEditForm passwordEditForm) {
         return "members/passwordEdit";

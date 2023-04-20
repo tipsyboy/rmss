@@ -31,7 +31,6 @@ public class ShopController {
     private final ShopOpenFormValidator shopOpenFormValidator;
     private final ShopService shopService;
     private final ItemService itemService;
-    private final OrderService orderService;
 
     @InitBinder("shopOpenForm")
     public void openFormValidation(WebDataBinder dataBinder) {
@@ -102,15 +101,5 @@ public class ShopController {
 
         model.addAttribute("shopPath", shopPath);
         return "shop/shopSettings";
-    }
-    
-    // 판매 주문 리스트
-    @GetMapping("/{shopPath}/orders")
-    public String viewSalesOrderList(@PathVariable String shopPath,
-                                     Model model) {
-        // TODO: 관리자 권한
-
-        model.addAttribute("orders", orderService.shopOrderList(shopPath));
-        return "shop/shopSalesOrderList";
     }
 }

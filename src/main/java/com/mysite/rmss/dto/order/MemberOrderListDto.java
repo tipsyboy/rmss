@@ -22,7 +22,7 @@ public class MemberOrderListDto {
         this.orderId = entity.getId();
         this.shopTitle = entity.getShop().getShopTitle();
         this.orderDate = entity.getOrderDate();
-        this.orderStatus = getOrderStatus();
+        this.orderStatus = entity.getOrderStatus();
         for (OrderItem orderItem : entity.getOrderItemList()) {
             orderItemResponseDtoList.add(new OrderItemResponseDto(orderItem));
         }

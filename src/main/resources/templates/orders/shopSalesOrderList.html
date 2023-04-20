@@ -18,7 +18,7 @@
             </thead>
 
             <tbody>
-            <tr class="text-center" th:each="order : ${orders}">
+            <tr class="text-center" th:each="order : ${salesOrderList}">
                 <td th:text="${order.orderId}"></td>
                 <td th:text="${order.memberName}"></td>
                 <td th:text="${order.orderItemResponseDtoList[0].itemName}"></td>
