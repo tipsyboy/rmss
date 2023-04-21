@@ -28,7 +28,6 @@ public class SecurityConfig {
                     .antMatchers("/**").permitAll()
                 .and()
                     .csrf().ignoringAntMatchers("/h2-console/**")
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                     .headers()
                     .addHeaderWriter(new XFrameOptionsHeaderWriter(
