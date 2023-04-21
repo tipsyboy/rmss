@@ -88,4 +88,10 @@ public class OrderService {
 
         return orderItems;
     }
+
+    @Transactional
+    public void cancelOrder(Long orderId) {
+        Order order = orderRepository.findOne(orderId);
+        order.cancel();
+    }
 }

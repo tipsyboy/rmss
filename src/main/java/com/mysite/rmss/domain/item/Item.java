@@ -47,7 +47,7 @@ public class Item {
         return item;
     }
 
-    // ===== ===== //
+    // ===== 엔티티 로직 ===== //
     public void addStock(int quantity) {
         this.stock += quantity;
     }

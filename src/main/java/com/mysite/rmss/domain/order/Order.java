@@ -68,4 +68,14 @@ public class Order {
 
         return order;
     }
+
+    // ===== 로직 ===== //
+    public void cancel() {
+        // TODO: 배송 엔티티 관련 로직 추가
+
+        this.orderStatus = OrderStatus.CANCEL;
+        for (OrderItem orderItem : orderItemList) {
+            orderItem.cancel();
+        }
+    }
 }

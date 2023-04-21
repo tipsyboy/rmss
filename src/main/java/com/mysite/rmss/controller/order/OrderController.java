@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Slf4j
@@ -61,4 +62,15 @@ public class OrderController {
         return "orders/memberOrderList";
     }
 
+    @PostMapping("/orders/{orderId}/cancel")
+    public String cancelOrder(@PathVariable("orderId") Long orderId,
+                              @CurrentMember Member member,
+                              RedirectAttributes redirectAttributes) {
+
+        log.info("아니 어디서 에러야 ㅡㅡ ?");
+        orderService.cancelOrder(orderId);
+
+        redirectAttributes.addAttribute("memberName", member.getUsername());
+        return "redirect:/profile/{memberName}/orders";
+    }
 }

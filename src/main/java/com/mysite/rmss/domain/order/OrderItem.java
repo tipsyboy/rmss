@@ -43,12 +43,25 @@ public class OrderItem {
         orderItem.orderPrice = cartItem.getPrice();
         orderItem.count = cartItem.getCount();
 
+        cartItem.getItem().removeStock(cartItem.getCount());
+
         return orderItem;
     }
 
-
+    // ===== 연관관계 세팅 ===== //
     public void setOrder(Order order) {
         this.order = order;
     }
 
+    // ===== 엔티티 로직 ===== //
+    public void cancel() {
+        /**
+         *  Order 취소시 재고 복귀
+         */
+        this.getItem().addStock(count);
+    }
+
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
+    }
 }
