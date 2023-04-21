@@ -53,7 +53,7 @@ public class OrderController {
                                       @CurrentMember Member currentMember,
                                       Model model) {
 
-        if (currentMember == null || !currentMember.getUsername().equals(memberService.findMemberInfoByUsername(username).getUsername())) {
+        if (currentMember == null || !currentMember.getId().equals(memberService.findMemberInfoByUsername(username).getMemberId())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "접근 권한이 없습니다.");
         }
 
