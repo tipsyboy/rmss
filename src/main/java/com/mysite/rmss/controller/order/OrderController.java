@@ -62,12 +62,11 @@ public class OrderController {
         return "orders/memberOrderList";
     }
 
-    @PostMapping("/orders/{orderId}/cancel")
+    @GetMapping("/orders/{orderId}/cancel")
     public String cancelOrder(@PathVariable("orderId") Long orderId,
                               @CurrentMember Member member,
                               RedirectAttributes redirectAttributes) {
 
-        log.info("아니 어디서 에러야 ㅡㅡ ?");
         orderService.cancelOrder(orderId);
 
         redirectAttributes.addAttribute("memberName", member.getUsername());

@@ -24,8 +24,9 @@
                 <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
                 <td>
                     <a th:if="${order.orderStatus.name() == 'ORDER'}" href="#"
-                       th:href="'javascript:cancelOrder('+${order.orderId}+')'"
-                       class="btn btn-danger">CANCEL</a>
+                       th:href="@{|/orders/${order.orderId}/cancel|}"
+                       class="btn btn-danger" onclick="return confirm('정말 취소하시겠습니까?')">CANCEL
+                    </a>
                 </td>
             </tr>
             </tbody>
