@@ -26,12 +26,14 @@
                     <td th:text="${cartItemInfo.price}"></td>
                     <td th:text="${cartItemInfo.quantity}"></td>
                     <td th:text="${cartItemInfo.itemSumPrice}"></td>
-                    <td><a th:href="@{|/pCart/delete/${cartItemInfo.cartItemId}|}" class="btn btn-danger">삭제</a></td>
+                    <td><a th:href="@{|/pCart/delete/${cartItemInfo.cartItemId}|}" class="btn btn-danger"
+                           onclick="return confirm('정말 취소하시겠습니까?')">삭제</a></td>
                 </tr>
                 </tbody>
             </table>
             <div>
-                <button class="btn btn-primary btn-block" type="submit">주문하기</button>
+                <button class="btn btn-primary btn-block" type="submit"
+                        onclick="return confirm('선택한 상품들을 주문하겠습니까?')">주문하기</button>
             </div>
         </form>
     </div>
