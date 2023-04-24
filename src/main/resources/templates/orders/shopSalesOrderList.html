@@ -14,6 +14,7 @@
                 <th>가격</th>
                 <th>상태</th>
                 <th>주문 날짜</th>
+                <th></th>
             </tr>
             </thead>
 
@@ -25,6 +26,12 @@
                 <td>주문 가격 토탈</td>
                 <td th:text="${order.orderStatus}"></td>
                 <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td>
+                    <a th:if="${order.orderStatus.name() == 'ORDER'}" href="#"
+                       th:href="@{|/orders/${order.orderId}/cancel|}"
+                       class="btn btn-danger" onclick="return confirm('정말 취소하시겠습니까?')">CANCEL
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>

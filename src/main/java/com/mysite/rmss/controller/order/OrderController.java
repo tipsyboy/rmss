@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,15 +30,17 @@ public class OrderController {
 
     @PostMapping("/orders/order")
     public String order(@ModelAttribute OrderSheetInfoDto orderSheetInfoDto,
-                        @CurrentMember Member currentMember) {
+                        @CurrentMember Member currentMember,
+                        RedirectAttributes redirectAttributes) {
 
         if (currentMember == null) {
             return "redirect:/";
         }
 
         orderService.orderByCart(orderSheetInfoDto, currentMember.getUsername());
-        // TODO: redirect 대신에 주문 완료 페이지로?
-        return "redirect:/";
+
+        redirectAttributes.addAttribute("memberName", currentMember.getUsername());
+        return "redirect:/profile/{memberName}/orders";
     }
 
     // 판매 주문 리스트
@@ -64,12 +68,10 @@ public class OrderController {
 
     @GetMapping("/orders/{orderId}/cancel")
     public String cancelOrder(@PathVariable("orderId") Long orderId,
-                              @CurrentMember Member member,
-                              RedirectAttributes redirectAttributes) {
+                              HttpServletRequest request) {
 
         orderService.cancelOrder(orderId);
 
-        redirectAttributes.addAttribute("memberName", member.getUsername());
-        return "redirect:/profile/{memberName}/orders";
+        return "redirect:" + request.getHeader("Referer");
     }
 }
