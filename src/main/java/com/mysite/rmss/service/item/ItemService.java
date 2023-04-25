@@ -11,8 +11,12 @@ import com.mysite.rmss.repository.shop.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
@@ -25,12 +29,19 @@ public class ItemService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void addItem(Long memberId, ItemCreateForm itemCreateForm) {
+    public void addItem(Long memberId, ItemCreateForm itemCreateForm) throws IOException {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다 id=" + memberId));
 
+        MultipartFile imgFile = itemCreateForm.getImgFile();
+        String ogImgName = imgFile.getOriginalFilename();
+        String imgPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
+        String imgName = UUID.randomUUID() + "_" + ogImgName;
+        imgFile.transferTo(new File(imgPath, imgName));
+
+
         Shop shop = member.getShop();
-        Item item = Item.of(shop, itemCreateForm);
+        Item item = Item.of(shop, itemCreateForm, imgName);
         itemRepository.save(item);
     }
 

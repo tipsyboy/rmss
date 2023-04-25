@@ -26,6 +26,9 @@ public class Item {
     @JoinColumn(name = "shop_id")
     private Shop shop;
 
+    private String imgName;
+    private String imgPath;
+
 
     // ===== =====//
     private void mappingShop(Shop shop) {
@@ -36,7 +39,7 @@ public class Item {
     // ===== 생성 ===== //
     protected Item() {}
 
-    public static Item of(Shop shop, ItemCreateForm itemCreateForm) {
+    public static Item of(Shop shop, ItemCreateForm itemCreateForm, String imgName) {
         Item item = new Item();
         item.mappingShop(shop);
         item.itemName = itemCreateForm.getItemName();
@@ -44,6 +47,8 @@ public class Item {
         item.price = itemCreateForm.getPrice();
         item.stock = itemCreateForm.getStock();
         item.createDate = LocalDateTime.now();
+        item.imgName = imgName;
+        item.imgPath = "/files/" + imgName;
         return item;
     }
 

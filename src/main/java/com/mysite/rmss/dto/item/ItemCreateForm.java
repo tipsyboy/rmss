@@ -3,6 +3,7 @@ package com.mysite.rmss.dto.item;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -26,13 +27,16 @@ public class ItemCreateForm {
     @Length(max = 30, message = "상품 소개를 30자 이내로 입력해 주세요.")
     private String shortDescription; // 짧은 소개
 
+    private MultipartFile imgFile;
+
     // TODO: 아이템 이미지 추가
 
     // ===== 생성 ===== //
-    public ItemCreateForm(String itemName, Integer price, Integer stock, String shortDescription) {
+    public ItemCreateForm(String itemName, Integer price, Integer stock, String shortDescription, MultipartFile imgFile) {
         this.itemName = itemName;
         this.price = price;
         this.stock = stock;
         this.shortDescription = shortDescription;
+        this.imgFile = imgFile;
     }
 }

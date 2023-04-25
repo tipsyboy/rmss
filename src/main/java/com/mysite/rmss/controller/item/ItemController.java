@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -39,7 +40,9 @@ public class ItemController {
     public String createItem(@PathVariable String shopPath,
                              @Valid @ModelAttribute ItemCreateForm itemCreateForm,
                              BindingResult bindingResult,
-                             @CurrentMember Member currentMember) {
+                             @CurrentMember Member currentMember) throws IOException {
+
+        // TODO: 판매자 검증
 
         if (bindingResult.hasErrors()) {
             return "item/createItemForm";
