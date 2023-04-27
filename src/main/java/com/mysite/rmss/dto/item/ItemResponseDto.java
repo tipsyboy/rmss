@@ -16,7 +16,6 @@ public class ItemResponseDto {
     private String priceWon;
     private LocalDateTime createDate;
     private String description;
-    private String imgPath = "https://dummyimage.com/600x700/dee2e6/6c757d.jpg";
 //    private Boolean status; // 상태
 
     public ItemResponseDto(Item entity) {
@@ -27,7 +26,6 @@ public class ItemResponseDto {
         this.description = entity.getDescription();
         this.createDate = entity.getCreateDate();
         this.priceWon = formatWon(entity.getPrice());
-        this.imgPath = entity.getImgPath();
     }
 
     private String formatWon(Integer price) {
