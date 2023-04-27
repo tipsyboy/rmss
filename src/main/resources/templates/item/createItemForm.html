@@ -40,7 +40,7 @@
                 <small class="text-danger" th:errors="*{stock}">재고 에러</small>
             </div>
 
-            <!-- 상품 소개 short? -->
+            <!-- 상품 소개 -->
             <div class="form-group mb-2">
                 <label for="shortDescription" class="form-label">상품 간단 소개</label>
                 <input id="shortDescription" type="text" class="form-control" aria-describedby="shortDescriptionHelp"
@@ -49,6 +49,7 @@
                 <small class="text-danger" th:errors="*{shortDescription}">상품 소개 에러</small>
             </div>
 
+            <!-- 이미지 업로드 -->
             <div class="form-group mb-2">
                 <label for="imgFile" class="form-label">상품 이미지 업로드</label>
                 <input id="imgFile" type="file" class="form-control" th:field="*{imgFile}">

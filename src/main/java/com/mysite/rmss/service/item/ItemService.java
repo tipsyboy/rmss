@@ -30,11 +30,20 @@ public class ItemService {
 
     @Transactional
     public void addItem(Long memberId, ItemCreateForm itemCreateForm) throws IOException {
+
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다 id=" + memberId));
 
-        MultipartFile imgFile = itemCreateForm.getImgFile();
-        String ogImgName = imgFile.getOriginalFilename();
+        // 상품 이미지 파일 원래 이름 추출
+        String ogName = itemCreateForm.getImgFile().getOriginalFilename();
+        // 서버에 업로드할 파일 이름으로 사용할 uuid 생성
+        UUID uuid = UUID.randomUUID();
+        // 확장자 추출
+        String extension = ogName.substring(ogName.lastIndexOf("."));
+        // uuid + 확장자 결합
+        String savedName = uuid + extension;
+
+        String ogImgName = imgFile.getOriginalFilename(); //
         String imgPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
         String imgName = UUID.randomUUID() + "_" + ogImgName;
         imgFile.transferTo(new File(imgPath, imgName));
