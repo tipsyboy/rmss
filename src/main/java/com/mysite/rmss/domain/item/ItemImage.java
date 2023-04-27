@@ -2,6 +2,9 @@ package com.mysite.rmss.domain.item;
 
 import lombok.Getter;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 @Getter
 public class ItemImage {
 
