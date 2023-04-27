@@ -37,7 +37,7 @@ public class Item {
     // ===== 생성 ===== //
     protected Item() {}
 
-    public static Item of(Shop shop, ItemCreateForm itemCreateForm) {
+    public static Item of(Shop shop, ItemCreateForm itemCreateForm, ItemImage itemImage) {
         Item item = new Item();
         item.mappingShop(shop);
         item.itemName = itemCreateForm.getItemName();
@@ -45,6 +45,8 @@ public class Item {
         item.price = itemCreateForm.getPrice();
         item.stock = itemCreateForm.getStock();
         item.createDate = LocalDateTime.now();
+        item.itemImage = itemImage;
+
         return item;
     }
 

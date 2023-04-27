@@ -1,10 +1,12 @@
 package com.mysite.rmss.service.item;
 
 import com.mysite.rmss.domain.item.Item;
+import com.mysite.rmss.domain.item.ItemImage;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.shop.Shop;
 import com.mysite.rmss.dto.item.ItemCreateForm;
 import com.mysite.rmss.dto.item.ItemResponseDto;
+import com.mysite.rmss.file.FileStore;
 import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
 import com.mysite.rmss.repository.shop.ShopRepository;
@@ -27,6 +29,7 @@ public class ItemService {
 //    private final ShopRepository shopRepository;
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
+    private final FileStore fileStore;
 
     @Transactional
     public void addItem(Long memberId, ItemCreateForm itemCreateForm) throws IOException {
@@ -34,9 +37,10 @@ public class ItemService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다 id=" + memberId));
 
-
+        ItemImage itemImage = fileStore.storeFile(itemCreateForm.getImgFile());
         Shop shop = member.getShop();
-        Item item = Item.of(shop, itemCreateForm);
+        Item item = Item.of(shop, itemCreateForm, itemImage);
+
         itemRepository.save(item);
     }
 
