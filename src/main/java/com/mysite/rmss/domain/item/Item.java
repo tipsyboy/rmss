@@ -25,7 +25,8 @@ public class Item {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id")
     private Shop shop;
-
+    
+    private ItemImage itemImage; // 상품 이미지 정보
 
     // ===== =====//
     private void mappingShop(Shop shop) {
