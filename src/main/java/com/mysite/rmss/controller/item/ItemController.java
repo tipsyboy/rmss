@@ -3,6 +3,7 @@ package com.mysite.rmss.controller.item;
 import com.mysite.rmss.config.auth.CurrentMember;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.item.ItemCreateForm;
+import com.mysite.rmss.file.FileStore;
 import com.mysite.rmss.service.item.ItemService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
