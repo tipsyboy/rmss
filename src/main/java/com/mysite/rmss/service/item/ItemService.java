@@ -11,12 +11,15 @@ import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
 import com.mysite.rmss.repository.shop.ShopRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -53,6 +56,10 @@ public class ItemService {
     public ItemResponseDto findById(Long itemId) {
         return new ItemResponseDto(itemRepository.findById(itemId)
                 .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다. itemId=" + itemId)));
+    }
+
+    public Resource downloadImage(String filename) throws MalformedURLException {
+        return new UrlResource("file:" + fileStore.getFullPath(filename));
     }
 
 //    public List<ItemResponseDto> findAllItemByShopPathEntityRep(String shopPath) {

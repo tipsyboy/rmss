@@ -53,4 +53,9 @@ public class ItemController {
         return "redirect:/{shopPath}/settings";
     }
 
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public Resource downloadIamge(@PathVariable String filename) throws MalformedURLException {
+        return itemService.downloadImage(filename);
+    }
 }
