@@ -4,7 +4,10 @@
         <div th:each="item : ${items}" class="col mb-5">
             <a class="card h-100" th:href="@{|/${shopInfoDto.url}/items/${item.id}|}">
                 <!-- Product image-->
-                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+<!--                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
+                <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
+                     th:src="|/images/${item.getItemImage().getStoredName()}|"
+                     width="450" height="200" alt="..." />
                 <!-- Product details-->
                 <div class="card-body p-4">
                     <div class="text-center">
