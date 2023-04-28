@@ -19,7 +19,8 @@
     <!-- 프로필 탭 -->
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <div class="mb-4">TODO: 프로필 이미지 넣기</div>
+            <img class="mb-5" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
+                 th:src="|/images/${member.getMemberProfileImage().getStoredName()}|" width="400" height="300" alt="..." />
             <div>✏ 한줄소개</div>
             <p class="lead mb-4" th:if="${!#strings.isEmpty(member.bio)}" th:text="${member.bio}">한줄소개</p>
             <p class="lead mb-4" th:if="${#strings.isEmpty(member.bio)}">한줄소개를 추가해주세요.</p>

@@ -4,6 +4,8 @@ import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.member.MemberInfoResponseDto;
 import com.mysite.rmss.dto.member.MemberProfileEditForm;
 import com.mysite.rmss.dto.member.MemberSaveForm;
+import com.mysite.rmss.file.FileStore;
+import com.mysite.rmss.file.UploadFile;
 import com.mysite.rmss.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -22,9 +26,10 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final MemberSecurityService memberSecurityService;
+    private final FileStore fileStore;
 
     @Transactional
-    public void signup(MemberSaveForm form) {
+    public void signup(MemberSaveForm form) throws IOException {
         Member newMember = saveNewMember(form);
         memberRepository.save(newMember);
         loginAfterSignup(form);
@@ -66,11 +71,14 @@ public class MemberService {
         findMember.editPassword(passwordEncoder.encode(newPassword));
     }
 
-    private Member saveNewMember(MemberSaveForm form) {
+    private Member saveNewMember(MemberSaveForm form) throws IOException {
+        UploadFile memberProfileImage = fileStore.storeFile(form.getImgFile());
+
         return Member.builder()
                 .username(form.getUsername())
                 .password(passwordEncoder.encode(form.getPassword1()))
                 .email(form.getEmail())
+                .memberProfileImage(memberProfileImage)
                 .build();
     }
 

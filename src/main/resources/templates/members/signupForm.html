@@ -5,7 +5,8 @@
     </div>
 
     <div class="row justify-content-center">
-        <form class="col-sm-6" th:action="@{/members/signup}" th:object="${saveForm}" method="post">
+        <form class="col-sm-6" th:action="@{/members/signup}" th:object="${saveForm}"
+              enctype="multipart/form-data" method="post">
             <!-- ID -->
             <div class="form-group mb-2">
                 <label for="username" class="form-label">ID</label>
@@ -44,6 +45,12 @@
                        th:errorclass="border-danger" th:field="*{email}" />
                 <small id="emailHelp" class="form-text text-muted">이메일을 입력해주세요.</small>
                 <small class="text-danger" th:errors="*{email}">이메일 에러</small>
+            </div>
+
+            <!-- 이미지 업로드 -->
+            <div class="form-group mb-2">
+                <label for="imgFile" class="form-label">프로필 이미지</label>
+                <input id="imgFile" type="file" class="form-control" th:field="*{imgFile}">
             </div>
 
             <div class="form-group mt-4">

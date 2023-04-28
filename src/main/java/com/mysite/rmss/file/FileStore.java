@@ -24,7 +24,7 @@ public class FileStore {
          */
 
         if (multipartFile.isEmpty()) {
-            return null;
+            return new UploadFile("basic-image.jpg", "basic-image.jpg");
         }
 
         String originalFilename = multipartFile.getOriginalFilename();

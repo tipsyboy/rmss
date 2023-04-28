@@ -3,6 +3,7 @@ package com.mysite.rmss.domain.member;
 import com.mysite.rmss.domain.cart.Cart;
 import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.shop.Shop;
+import com.mysite.rmss.file.UploadFile;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -40,16 +41,20 @@ public class Member {
 
     // TODO: Embedded 타입으로 이후에 Address 를 추가할 것
 
+    @Embedded
+    private UploadFile memberProfileImage;
 
     // ===== 생성 ===== //
     protected Member() {}
 
     @Builder
-    public Member(String username, String email, String password) {
+    public Member(String username, String email, String password,
+                  UploadFile memberProfileImage) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.cart = Cart.from(this);
+        this.memberProfileImage = memberProfileImage;
     }
 
     // ===== ===== //

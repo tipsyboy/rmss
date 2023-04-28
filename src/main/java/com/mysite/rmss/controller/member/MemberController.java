@@ -11,6 +11,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class MemberController {
 
     @PostMapping("/signup")
     public String signup(@Valid @ModelAttribute("saveForm") MemberSaveForm saveForm,
-                         BindingResult bindingResult) {
+                         BindingResult bindingResult) throws IOException {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult={}", bindingResult);

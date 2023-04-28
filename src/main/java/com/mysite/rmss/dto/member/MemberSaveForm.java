@@ -2,6 +2,7 @@ package com.mysite.rmss.dto.member;
 
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -27,10 +28,14 @@ public class MemberSaveForm {
     @Email
     private String email;
 
-    public MemberSaveForm(String username, String password1, String password2, String email) {
+    private MultipartFile imgFile;
+
+    public MemberSaveForm(String username, MultipartFile imgFile,
+                          String password1, String password2, String email) {
         this.username = username;
         this.password1 = password1;
         this.password2 = password2;
         this.email = email;
+        this.imgFile = imgFile;
     }
 }
