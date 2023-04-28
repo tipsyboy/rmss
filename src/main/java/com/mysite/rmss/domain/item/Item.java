@@ -3,6 +3,7 @@ package com.mysite.rmss.domain.item;
 import com.mysite.rmss.domain.shop.Shop;
 import com.mysite.rmss.dto.item.ItemCreateForm;
 import com.mysite.rmss.exception.NotEnoughStockException;
+import com.mysite.rmss.file.UploadFile;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -27,7 +28,7 @@ public class Item {
     private Shop shop;
 
     @Embedded
-    private ItemImage itemImage; // 상품 이미지 정보
+    private UploadFile uploadFile; // 상품 이미지 정보
 
     // ===== =====//
     private void mappingShop(Shop shop) {
@@ -38,7 +39,7 @@ public class Item {
     // ===== 생성 ===== //
     protected Item() {}
 
-    public static Item of(Shop shop, ItemCreateForm itemCreateForm, ItemImage itemImage) {
+    public static Item of(Shop shop, ItemCreateForm itemCreateForm, UploadFile uploadFile) {
         Item item = new Item();
         item.mappingShop(shop);
         item.itemName = itemCreateForm.getItemName();
@@ -46,7 +47,7 @@ public class Item {
         item.price = itemCreateForm.getPrice();
         item.stock = itemCreateForm.getStock();
         item.createDate = LocalDateTime.now();
-        item.itemImage = itemImage;
+        item.uploadFile = uploadFile;
 
         return item;
     }

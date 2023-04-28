@@ -1,7 +1,7 @@
 package com.mysite.rmss.service.item;
 
 import com.mysite.rmss.domain.item.Item;
-import com.mysite.rmss.domain.item.ItemImage;
+import com.mysite.rmss.file.UploadFile;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.shop.Shop;
 import com.mysite.rmss.dto.item.ItemCreateForm;
@@ -9,19 +9,12 @@ import com.mysite.rmss.dto.item.ItemResponseDto;
 import com.mysite.rmss.file.FileStore;
 import com.mysite.rmss.repository.item.ItemRepository;
 import com.mysite.rmss.repository.member.MemberRepository;
-import com.mysite.rmss.repository.shop.ShopRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
@@ -40,9 +33,9 @@ public class ItemService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다 id=" + memberId));
 
-        ItemImage itemImage = fileStore.storeFile(itemCreateForm.getImgFile());
+        UploadFile uploadFile = fileStore.storeFile(itemCreateForm.getImgFile());
         Shop shop = member.getShop();
-        Item item = Item.of(shop, itemCreateForm, itemImage);
+        Item item = Item.of(shop, itemCreateForm, uploadFile);
 
         itemRepository.save(item);
     }
@@ -58,9 +51,6 @@ public class ItemService {
                 .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다. itemId=" + itemId)));
     }
 
-    public Resource downloadImage(String filename) throws MalformedURLException {
-        return new UrlResource("file:" + fileStore.getFullPath(filename));
-    }
 
 //    public List<ItemResponseDto> findAllItemByShopPathEntityRep(String shopPath) {
 //        // 이건 어떰?

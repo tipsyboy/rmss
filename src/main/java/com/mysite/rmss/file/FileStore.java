@@ -1,6 +1,5 @@
 package com.mysite.rmss.file;
 
-import com.mysite.rmss.domain.item.ItemImage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,9 +18,9 @@ public class FileStore {
         return fileDir + filename;
     }
 
-    public ItemImage storeFile(MultipartFile multipartFile) throws IOException {
+    public UploadFile storeFile(MultipartFile multipartFile) throws IOException {
         /**
-         * 유저에게 받은 이미지 파일을 서버에 저장될 파일명을 생성해서 서버에 저장하고 ItemImage 인스턴스를 반환
+         * 유저에게 받은 이미지 파일을 서버에 저장될 파일명을 생성해서 서버에 저장하고 UploadFile 인스턴스를 반환
          */
 
         if (multipartFile.isEmpty()) {
@@ -35,7 +34,7 @@ public class FileStore {
         multipartFile.transferTo(new File(getFullPath(storeImageName)));
 
         // 생성한 인스턴스 리턴
-        return new ItemImage(originalFilename, storeImageName);
+        return new UploadFile(originalFilename, storeImageName);
     }
 
     private String createStoreImageName(String originalFilename) {

@@ -52,10 +52,4 @@ public class ItemController {
         itemService.addItem(currentMember.getId(), itemCreateForm);
         return "redirect:/{shopPath}/settings";
     }
-
-    @ResponseBody
-    @GetMapping("/images/{filename}")
-    public Resource downloadIamge(@PathVariable String filename) throws MalformedURLException {
-        return itemService.downloadImage(filename);
-    }
 }
