@@ -4,12 +4,15 @@ import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.domain.shop.Shop;
 import com.mysite.rmss.dto.shop.ShopInfoResponseDto;
 import com.mysite.rmss.dto.shop.ShopOpenForm;
+import com.mysite.rmss.file.FileStore;
+import com.mysite.rmss.file.UploadFile;
 import com.mysite.rmss.repository.member.MemberRepository;
 import com.mysite.rmss.repository.shop.ShopRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,14 +23,18 @@ public class ShopService {
 
     private final MemberRepository memberRepository;
     private final ShopRepository shopRepository;
+    private final FileStore fileStore;
 
     @Transactional
-    public Long openShop(Long memberId, ShopOpenForm shopOpenForm) {
+    public Long openShop(Long memberId, ShopOpenForm shopOpenForm) throws IOException {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다. id=" + memberId));
 
-        Shop shop = Shop.of(findMember, shopOpenForm);
+        UploadFile shopImage = fileStore.storeFile(shopOpenForm.getImgFile());
+        Shop shop = Shop.of(findMember, shopOpenForm, shopImage);
+
         shopRepository.save(shop);
+
         return shop.getId();
     }
 

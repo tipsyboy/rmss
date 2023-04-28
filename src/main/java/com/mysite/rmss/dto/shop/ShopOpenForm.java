@@ -2,6 +2,7 @@ package com.mysite.rmss.dto.shop;
 
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -26,10 +27,14 @@ public class ShopOpenForm {
     @Length(max = 100, message = "짧은 쇼핑몰 소개글을 100자 이내로 입력해 주세요.")
     private String description;
 
-    public ShopOpenForm(String shopTitle, String url, String description, String phoneNumber) {
+    private MultipartFile imgFile;
+
+    public ShopOpenForm(String shopTitle, String url,
+                        String description, String phoneNumber, MultipartFile imgFile) {
         this.shopTitle = shopTitle;
         this.url = url;
         this.description = description;
         this.phoneNumber = phoneNumber;
+        this.imgFile = imgFile;
     }
 }

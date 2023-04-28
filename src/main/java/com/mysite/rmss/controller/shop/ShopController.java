@@ -19,6 +19,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -51,7 +52,7 @@ public class ShopController {
     @PostMapping("/shop/open")
     public String openShop(@Valid @ModelAttribute ShopOpenForm shopOpenForm,
                            BindingResult bindingResult,
-                           @CurrentMember Member currentMember) {
+                           @CurrentMember Member currentMember) throws IOException {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult 에러있음={}", bindingResult);

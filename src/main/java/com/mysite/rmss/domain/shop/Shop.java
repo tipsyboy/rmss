@@ -4,6 +4,7 @@ import com.mysite.rmss.domain.order.Order;
 import com.mysite.rmss.domain.item.Item;
 import com.mysite.rmss.domain.member.Member;
 import com.mysite.rmss.dto.shop.ShopOpenForm;
+import com.mysite.rmss.file.UploadFile;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -36,8 +37,10 @@ public class Shop {
     @OneToMany(mappedBy = "shop")
     private List<Order> orderList = new ArrayList<>();
 
+    @Embedded
+    private UploadFile shopImage;
+
     // TODO: 쇼핑몰의 대표 카테고리 - 3개로 제한?
-//    private Set<Category> categories = new HashSet<>();
 
 
     // ===== 연관관계? ===== //
@@ -49,13 +52,15 @@ public class Shop {
     // ===== 생성 ===== //
     protected Shop() {}
 
-    public static Shop of(Member member, ShopOpenForm shopOpenForm) {
+    public static Shop of(Member member, ShopOpenForm shopOpenForm, UploadFile shopImage) {
         Shop shop = new Shop();
         shop.mappingMember(member);
         shop.shopTitle = shopOpenForm.getShopTitle();
         shop.url = shopOpenForm.getUrl();
         shop.description = shopOpenForm.getDescription();
         shop.phoneNumber = shop.getPhoneNumber();
+        shop.shopImage = shopImage;
+
         return shop;
     }
 
