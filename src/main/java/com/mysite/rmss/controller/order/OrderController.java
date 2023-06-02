@@ -37,6 +37,11 @@ public class OrderController {
             return "redirect:/";
         }
 
+        if (orderSheetInfoDto.getIdList() == null) {
+            redirectAttributes.addAttribute("memberName", currentMember.getUsername());
+            return "redirect:/pCart/{memberName}";
+        }
+
         orderService.orderByCart(orderSheetInfoDto, currentMember.getUsername());
 
         redirectAttributes.addAttribute("memberName", currentMember.getUsername());
